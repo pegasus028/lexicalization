@@ -188,7 +188,7 @@
       compact ? null : f('owned', 'Coiner’s project accounts', '(their posts are "owned", not counted)', '@word.project'),
       compact ? null : h('label', {}, h('span', { text: 'Role' }), h('select', { name: 'role' }, h('option', { value: 'student', selected: d.role === 'student' || !d.role, text: 'Student term' }), h('option', { value: 'control', selected: d.role === 'control', text: 'Control (real slang)' }), h('option', { value: 'foil', selected: d.role === 'foil', text: 'Foil (invented word)' })))];
   }
-  function readForm(form) { var o = {}; Array.prototype.forEach.call(form.elements, function (e) { if (e.name) o[e.name] = e.type === 'checkbox' ? e.checked : e.value; }); return o; }
+  function readForm(form) { var o = {}; Array.prototype.forEach.call(form.elements, function (e) { if (e.name && !e.disabled) o[e.name] = e.type === 'checkbox' ? e.checked : e.value; }); return o; }
   function viewSearch(app) {
     var d = (S.search && S.search.term) || { kind: 'new' }, perTerm = C.ONLINE.length;
     var form = h('form', { class: 'card stack', id: 'search-form', onsubmit: function (e) { e.preventDefault(); var o = readForm(form); if (!C.clean(o.word)) return toast('Enter a word to search.');
@@ -284,14 +284,18 @@
       h('label', {}, h('span', {}, 'Apps Script web app URL ', h('span', { class: 'hint', text: '(ends in /exec; saved in this browser only. Put it in config.js to set it for everyone.)' })), h('input', { name: 'api', value: store.get('lex_api') || '', placeholder: 'https://script.google.com/macros/s/…/exec' })),
       h('div', { class: 'row' }, h('button', { type: 'submit', text: 'Save and reload' }), !S.demo ? pill('Search: ' + (st.configured.provider || 'no key set'), st.configured.provider ? 'ok' : 'bad') : null, !S.demo ? pill('AI coding: ' + (st.configured.ai ? 'on' : 'off'), 'muted') : null, !S.demo ? pill('PIN: ' + (st.configured.pin ? 'set' : 'missing'), st.configured.pin ? 'ok' : 'bad') : null));
     if (!authed()) { app.replaceChildren(h('h1', { text: 'Settings' }), conn, h('p', { class: 'card', text: 'Unlock with the teacher PIN (top right) to change the schedule and budget.' })); return; }
+    if (!S.full) { call({ action: 'hits', id: '-' }).then(function (r) { if (r.ok && r.settings) { S.full = r.settings; if (route() === 'settings') render(); } }); }
+    var full = S.full || {};
     var form = h('form', { class: 'card stack', id: 'settings-form', onsubmit: function (e) { e.preventDefault(); var o = readForm(form), d = []; DAYS.forEach(function (_, i) { if (o['d' + i]) d.push(i); delete o['d' + i]; }); o.days = d.join(',');
-        act({ action: 'saveSettings', settings: o }, 'Settings saved').then(function (r) { if (r.ok) refresh().then(render); }); } },
+        act({ action: 'saveSettings', settings: o }, 'Settings saved').then(function (r) { if (r.ok) { S.full = r.settings || null; refresh().then(render); } }); } },
       h('h2', { text: 'Schedule and budget' }),
       h('div', {}, h('span', { class: 'small', style: 'font-weight:600', text: 'Automatic run days' }), h('div', { class: 'chips', style: 'margin-top:6px' }, DAYS.map(function (n, i) { return h('label', { class: 'chip', style: 'font-weight:400' }, h('input', { type: 'checkbox', name: 'd' + i, checked: days.indexOf(i) >= 0, style: 'width:auto' }), n); }))),
       h('div', { class: 'form' }, h('label', {}, h('span', { text: 'Hour (Bangkok time, 0 to 23)' }), h('input', { type: 'number', name: 'hour', min: 0, max: 23, value: s.hour })),
         h('label', {}, h('span', {}, 'Results per query ', h('span', { class: 'hint', text: '(10 is cheapest)' })), h('input', { type: 'number', name: 'sample', min: 5, max: 20, value: s.sample })),
         h('label', {}, h('span', {}, 'Monthly query cap ', h('span', { class: 'hint', text: '(searching stops at this number)' })), h('input', { type: 'number', name: 'monthlyCap', min: 0, value: s.monthlyCap })),
         h('label', {}, h('span', { text: 'Scheduled runs look back' }), h('select', { name: 'recency' }, h('option', { value: 'week', selected: s.recency !== 'month', text: 'One week' }), h('option', { value: 'month', selected: s.recency === 'month', text: 'One month' })))),
+      h('div', { class: 'form' }, h('label', {}, h('span', {}, 'Class accounts ', h('span', { class: 'hint', text: '(classmates and teacher; their posts are never counted)' })), h('input', { name: 'classHandles', value: full.classHandles || '', placeholder: '@account1, @account2', disabled: !S.full })),
+        h('label', {}, h('span', {}, 'Project tag ', h('span', { class: 'hint', text: '(posts carrying it are coded as marked)' })), h('input', { name: 'projectTag', value: full.projectTag || '', placeholder: '#EN30202', disabled: !S.full }))),
       h('div', {}, h('button', { type: 'submit', text: 'Save settings' })));
     var u = st.usage, pct = u.cap ? Math.min(100, Math.round(100 * u.queries / u.cap)) : 0;
     var budget = h('div', { class: 'card stack', id: 'budget' }, h('h2', { text: 'Search budget' }), h('p', {}, h('span', { class: 'num', text: u.queries + (u.cap ? ' of ' + u.cap : '') }), ' queries used in ' + u.month + '.'), h('div', { class: 'meter', role: 'img', 'aria-label': pct + '% of the monthly cap used' }, h('i', { style: 'width:' + pct + '%' })),
