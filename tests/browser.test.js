@@ -1,6 +1,6 @@
 // End-to-end check of the front end in demo mode. Run: node tests/browser.test.js  (needs Playwright)
 const { chromium } = require('playwright'); const path = require('path'); const assert = require('assert');
-const url = 'file://' + path.join(__dirname, '..', 'index.html'); const shots = process.env.SHOTS;
+const url = 'file://' + path.join(__dirname, '..', 'index.html') + '?demo=1'; const shots = process.env.SHOTS;
 (async () => {
   const b = await chromium.launch(); const errors = [];
   const page = await b.newPage({ viewport: { width: 1200, height: 900 } });
