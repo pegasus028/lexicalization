@@ -77,19 +77,33 @@ var LexDemo = (function () {
         return { id: t.id, word: t.word, forms: t.forms, kind: t.kind, meaning: t.meaning, coiner: t.coiner, role: t.role, active: t.active, dict: t.dict, series: C.series(t, h, r),
           check: t.role === 'student' ? null : C.instrumentCheck(t, h, r), review: h.filter(function (x) { return x.sense === 'unclear' && !x.reviewed; }).length }; }) };
   }
+  // Simulated search results for ANY word typed in demo mode. Each template is filled with the word,
+  // its hashtag, a listed form, an unlisted ending, a clue word and an older-meaning word, so the
+  // results spread across the match bands for both new words and existing words.
+  /*TPL-START*/
+  var TPL = { new: [{ platform: 'tiktok', user: 'tt:demo.viewer', title: 'honestly {w} is the whole mood this week', snippet: 'Simulated result.', intent: 'exact' }],
+    existing: [{ platform: 'tiktok', user: 'tt:demo.viewer', title: 'so {w}, {cue}', snippet: 'Simulated result.', intent: 'exact' }] };
+  /*TPL-END*/
   function fakeSearch(term) {
-    var out = [], samples = [['tiktok', 'tt:demo.viewer', 'honestly {w} is my whole personality this week'], ['tiktok', 'tt:another.user', '"{w}" — new word unlocked'], ['instagram', 'ig:demo.gram', 'weekend dump. very {w} #{h}'],
-      ['youtube', 'yt:@demochannel', 'Why everyone is saying {w}'], ['forums', 'x:demo_poster', 'is {w} a real word or did my sister make it up'], ['web', 'web:example.org', 'What does {w} mean? Definition and examples']];
-    samples.forEach(function (s) { var raw = { platform: s[0], user: s[1], url: url(s[0], s[1]), title: s[2].replace('{w}', term.word).replace('{h}', term.word.replace(/\s+/g, '')), snippet: 'Demo result. Connect the backend to search the live web.' };
-      var h = C.codeHit(term, raw, db.settings); if (h) out.push(h); });
-    return out;
+    var w = term.word, forms = term.forms.map(function (f) { return f.toLowerCase(); }), has = function (x) { return x.toLowerCase() === w.toLowerCase() || forms.indexOf(x.toLowerCase()) >= 0; };
+    var near = [w + 'ing', w + 's', w + 'ish', w + 'y'].filter(function (x) { return !has(x); })[0];
+    var fill = { w: w, W: w.charAt(0).toUpperCase() + w.slice(1), tag: '#' + w.replace(/[\s-]+/g, ''), form: term.forms[0] || w, near: near, cue: term.cues[0] || 'honestly', old: term.exclude[0] || '' };
+    var out = [], read = {};
+    (TPL[term.kind === 'existing' ? 'existing' : 'new'] || []).forEach(function (t) {
+      if (!fill.old && /\{old\}/.test(t.title + t.snippet)) return;
+      var sub = function (x) { return x.replace(/\{(w|W|tag|form|near|cue|old)\}/g, function (_, k) { return fill[k]; }); };
+      read[t.platform] = (read[t.platform] || 0) + 1;
+      var hit = C.codeHit(term, { platform: t.platform, user: t.user, url: url(t.platform, t.user), title: sub(t.title), snippet: sub(t.snippet) }, db.settings, { keepNear: true });
+      if (hit) out.push(hit);
+    });
+    return { hits: out, read: read };
   }
   function call(req) {
     var a = req.action, t;
     if (a === 'state') return state();
     if (a === 'login') return { ok: true };
     if (a === 'search') { t = C.normTerm(req.term || {}); if (!t.word) return { ok: false, error: 'Enter a word to search.' }; db.usage += 6;
-      return { ok: true, demo: true, term: t, hits: fakeSearch(t), read: { tiktok: 10, instagram: 10, facebook: 8, youtube: 10, forums: 9, web: 10 }, queries: 6, cachedQueries: 0, errors: [], provider: 'demo', usage: state().usage }; }
+      var fs = fakeSearch(t); return { ok: true, demo: true, term: t, hits: fs.hits, read: fs.read, queries: 6, cachedQueries: 0, errors: [], provider: 'demo', usage: state().usage }; }
     if (a === 'term') { t = db.terms.filter(function (x) { return x.id === req.id; })[0]; return t ? { ok: true, term: Object.assign({}, t) } : { ok: false, error: 'Term not found.' }; }
     if (a === 'hits') return { ok: true, hits: db.hits.filter(function (h) { return h.termId === req.id; }), settings: db.settings };
     if (a === 'saveTerm') { t = C.normTerm(req.term || {}); if (!t.word) return { ok: false, error: 'A term needs a word.' };
@@ -100,7 +114,7 @@ var LexDemo = (function () {
     if (a === 'runNow') { var runs = []; db.terms.filter(function (x) { return req.id ? x.id === req.id : x.active; }).forEach(function (x) {
         var first = !db.runs.some(function (r) { return r.termId === x.id; }), run = { id: id('r'), termId: x.id, date: TODAY, kind: first ? 'baseline' : 'manual', queries: 6, sample: 50, newHits: 0, error: '' };
         db.runs = db.runs.filter(function (r) { return !(r.termId === x.id && r.date === TODAY && r.kind !== 'baseline' && !first); });
-        if (first) fakeSearch(x).forEach(function (h) { db.hits.push(Object.assign(h, { id: id('h'), termId: x.id, runId: run.id, firstSeen: TODAY, baseline: true })); run.newHits++; });
+        if (first) fakeSearch(x).hits.filter(function (h) { return !h.near; }).forEach(function (h) { db.hits.push(Object.assign(h, { id: id('h'), termId: x.id, runId: run.id, firstSeen: TODAY, baseline: true })); run.newHits++; });
         db.runs.push(run); db.usage += 6; runs.push(run); }); return { ok: true, runs: runs, usage: state().usage }; }
     if (a === 'codeHit') { var h = db.hits.filter(function (x) { return x.id === req.hitId; })[0]; if (!h) return { ok: false, error: 'Hit not found.' }; Object.assign(h, req.patch || {}); h.reviewed = true; return { ok: true }; }
     if (a === 'deleteHit') { db.hits = db.hits.filter(function (x) { return x.id !== req.hitId; }); return { ok: true }; }

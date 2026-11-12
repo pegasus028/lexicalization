@@ -6,7 +6,7 @@
    Built into Code.gs by tools/build.js - edit this file, never Code.gs. */
 var LexCore = (function () {
   'use strict';
-  var VERSION = '1.0.0';
+  var VERSION = '1.1.0';
   var MAX_TERMS = 10;
   var USER_CAP = 3; // counted uses per user per calendar week
   var DAY = 86400000;
@@ -102,13 +102,76 @@ var LexCore = (function () {
 
   /* ---------- coding a hit ---------- */
   function formRegex(f) { return new RegExp('(^|[^a-z0-9])(#?)' + esc(f.toLowerCase()).replace(/\\?[\s-]+/g, '[\\s-]*') + '(?![a-z0-9])', 'i'); }
-  function findForm(term, text) {
-    var forms = allForms(term), t = ' ' + lower(text) + ' ', best = null;
-    forms.forEach(function (f) { if (formRegex(f).test(t) && (!best || f.length > best.length)) best = f; });
-    if (!best) return null;
-    var base = lower(term.word), b = lower(best).replace(/[\s-]+/g, '');
-    return b === base.replace(/[\s-]+/g, '') ? 'verbatim' : best;
+  /* ---------- match score: how closely a result matches the keyword and the meaning ---------- */
+  var KEYWORD_POINTS = { exact: 60, tag: 57, form: 54, near: 38 };
+  var MEANING_POINTS = { new: 40, unclear: 25, other: 5 };
+  var MEANING_BONUS = 5;
+  var NEAR_SUFFIXES = ['ers', 'ing', 'ish', 'es', 'ed', 'er', 's', 'd', 'y'];
+  var STOP = {};
+  ('about above after again also always another because been before being between both could does doing down during each ever every from have having here into just like made make many more most much must only other over really same should some someone something such than that their them then there these they thing this those through under until very want were what when where which while will with without would your yours people person when you'
+  ).split(' ').forEach(function (w) { STOP[w] = 1; });
+  function parts(f) { return lower(f).split(/[\s-]+/).filter(Boolean).map(esc); }
+  // plain = standalone word or phrase, not a hashtag; tag = "#word" or the joined form of a phrase
+  function plainRe(f) { return new RegExp('(^|[^a-z0-9#])(' + parts(f).join('[\\s-]+') + ')(?![a-z0-9])', 'i'); }
+  function tagRe(f) { var p = parts(f); return new RegExp(p.length > 1 ? '(^|[^a-z0-9])(#?' + p.join('') + '|#' + p.join('[\\s-]*') + ')(?![a-z0-9])' : '(^|[^a-z0-9])(#' + p[0] + ')(?![a-z0-9])', 'i'); }
+  function editWithin1(a, b) {
+    if (a === b) return false; var la = a.length, lb = b.length, i = 0, j = 0, diff = 0;
+    if (Math.abs(la - lb) > 1) return false;
+    while (i < la && j < lb) { if (a[i] === b[j]) { i++; j++; continue; } if (++diff > 1) return false; if (la > lb) i++; else if (lb > la) j++; else { i++; j++; } }
+    return diff + (la - i) + (lb - j) <= 1;
   }
+  // Which level of keyword match does the text contain? exact > tag > form > near > none.
+  function keywordMatch(term, text) {
+    var t = ' ' + lower(text) + ' ', head = lower(term.word), m, best = null;
+    if (!head) return { level: 'none', points: 0, form: null, matched: '' };
+    if ((m = plainRe(head).exec(t))) return { level: 'exact', points: KEYWORD_POINTS.exact, form: 'verbatim', matched: m[2] };
+    if ((m = tagRe(head).exec(t))) return { level: 'tag', points: KEYWORD_POINTS.tag, form: 'verbatim', matched: m[2] };
+    uniq(list(term.forms)).forEach(function (f) {
+      if (lower(f) === head) return;
+      var x = plainRe(f).exec(t) || tagRe(f).exec(t) || new RegExp('(^|[^a-z0-9])(#' + parts(f).join('[\\s-]*') + ')(?![a-z0-9])', 'i').exec(t);
+      if (x && (!best || f.length > best.form.length)) best = { level: 'form', points: KEYWORD_POINTS.form, form: f, matched: x[2] };
+    });
+    if (best) return best;
+    var p = parts(head), near = null;
+    // (a) an unlisted inflection or derivative: headword + a common suffix
+    m = new RegExp('(^|[^a-z0-9])#?(' + p.join('[\\s-]*') + '(?:' + NEAR_SUFFIXES.join('|') + '))(?![a-z0-9])', 'i').exec(t);
+    if (m) near = m[2];
+    // (b) a likely misspelling: one letter added, removed or changed. Only for coined words of 5+ letters,
+    //     because the one-letter neighbours of an existing word are usually other real words (cooked / booked).
+    if (!near && p.length === 1 && head.length >= 5 && term.kind !== 'existing') {
+      (t.match(/[a-z0-9]+/g) || []).some(function (tok) { if (editWithin1(tok, head)) { near = tok; return true; } return false; });
+    }
+    // (c) a phrase whose words all appear, but not side by side
+    if (!near && p.length > 1 && p.every(function (w) { return new RegExp('(^|[^a-z0-9])' + w + '(?![a-z0-9])', 'i').test(t); })) near = head.split(/[\s-]+/).join(' … ');
+    if (near) return { level: 'near', points: KEYWORD_POINTS.near, form: null, matched: near };
+    return { level: 'none', points: 0, form: null, matched: '' };
+  }
+  function meaningMatch(term, text) {
+    var cue = hasAny(term.cues, text), old = hasAny(term.exclude, text), level, bonus = 0;
+    if (old && !cue) level = 'other';
+    else if (old && cue) level = 'unclear';
+    else if (term.kind === 'existing') level = cue ? 'new' : 'unclear';
+    else level = 'new';
+    if (level === 'unclear' && term.meaning) {
+      var skip = {}; allForms(term).forEach(function (f) { lower(f).split(/[\s-]+/).forEach(function (w) { skip[w] = 1; }); });
+      var words = (lower(term.meaning).match(/[a-z]{4,}/g) || []).filter(function (w) { return !STOP[w] && !skip[w]; });
+      if (hasAny(words, text)) bonus = MEANING_BONUS;
+    }
+    return { level: level, points: MEANING_POINTS[level] + bonus, bonus: bonus };
+  }
+  function bandOf(pct) { return pct >= 100 ? 'exact' : pct >= 80 ? 'close' : pct >= 60 ? 'similar' : 'below'; }
+  var KEYWORD_LABEL = { exact: 'Exact word', tag: 'Hashtag or joined form only', form: 'A listed form', near: 'Near match' };
+  var MEANING_LABEL = { new: 'new meaning', unclear: 'meaning unclear', other: 'older meaning' };
+  // raw = {title, snippet}. Returns null when nothing like the keyword is in the text.
+  function matchScore(term, raw) {
+    var text = clean(raw.title) + ' — ' + clean(raw.snippet), k = keywordMatch(term, text);
+    if (k.level === 'none') return null;
+    var m = meaningMatch(term, text), pct = k.points + m.points;
+    return { pct: pct, band: bandOf(pct), keyword: k.level, keywordPoints: k.points, meaning: m.level, meaningPoints: m.points, bonus: m.bonus, matched: k.matched, form: k.form,
+      why: KEYWORD_LABEL[k.level] + (k.level === 'near' || k.level === 'form' ? ' (' + k.matched + ')' : '') + ' · ' + MEANING_LABEL[m.level] + (m.bonus ? ' (+' + m.bonus + ' meaning words)' : '') };
+  }
+  // The form a countable hit uses, or null. Near matches are never countable.
+  function findForm(term, text) { var k = keywordMatch(term, text); return k.level === 'none' || k.level === 'near' ? null : k.form; }
   function hasAny(words, text) {
     var t = lower(text);
     return list(words).some(function (w) { return new RegExp('(^|[^a-z0-9])' + esc(lower(w)) + '(?![a-z0-9])', 'i').test(t); });
@@ -131,23 +194,23 @@ var LexCore = (function () {
   }
   // raw = {url, title, snippet, date?}. Returns null when the term is not actually in the text
   // (search engines return near-matches), so such results are never stored or counted.
-  function codeHit(term, raw, settings) {
+  // opts.keepNear: also return near matches (Search screen only). They carry near:true and can never be stored or counted.
+  function codeHit(term, raw, settings, opts) {
     settings = settings || {};
     var text = clean(raw.title) + ' \u2014 ' + clean(raw.snippet);
-    var form = findForm(term, text);
-    if (!form) return null;
+    var match = matchScore(term, raw);
+    if (!match || (match.keyword === 'near' && !(opts && opts.keepNear))) return null;
+    var form = match.form || match.matched;
     var user = raw.user || userOf(raw.url), handle = normHandle(handleOf(user));
     var ownership = 'earned_out';
     if (handle && term.owned.indexOf(handle) >= 0) ownership = 'owned';
     else if (handle && list(settings.classHandles).map(normHandle).indexOf(handle) >= 0) ownership = 'class';
-    var sense;
-    if (hasAny(term.exclude, text)) sense = hasAny(term.cues, text) ? 'unclear' : 'other';
-    else if (term.kind === 'existing') sense = hasAny(term.cues, text) ? 'target' : 'unclear';
-    else sense = 'target';
+    var sense = match.meaning === 'new' ? 'target' : match.meaning;
     return {
       platform: raw.platform || platformOf(raw.url), url: clean(raw.url), title: clean(raw.title).slice(0, 200),
       snippet: clean(raw.snippet).slice(0, 400), pubDate: clean(raw.date), user: user, ownership: ownership, sense: sense,
-      marked: isMarked(term, text, settings) ? 'Y' : 'N', prompted: 'N', form: form, source: 'auto', reviewed: false
+      marked: isMarked(term, text, settings) ? 'Y' : 'N', prompted: 'N', form: form, source: 'auto', reviewed: false,
+      near: match.keyword === 'near', match: match
     };
   }
 
@@ -233,7 +296,7 @@ var LexCore = (function () {
     VERSION: VERSION, MAX_TERMS: MAX_TERMS, USER_CAP: USER_CAP, PLATFORMS: PLATFORMS, ONLINE: ONLINE, DAY: DAY,
     clean: clean, list: list, hash: hash, isoDay: isoDay, ms: ms, weekKey: weekKey, allForms: allForms, normTerm: normTerm, normHandle: normHandle,
     buildQueries: buildQueries, platformOf: platformOf, hostOf: hostOf, userOf: userOf, handleOf: handleOf, userCode: userCode,
-    findForm: findForm, isMarked: isMarked, codeHit: codeHit, band: band, countedHits: countedHits, scoreAt: scoreAt, series: series,
+    findForm: findForm, keywordMatch: keywordMatch, meaningMatch: meaningMatch, matchScore: matchScore, bandOf: bandOf, isMarked: isMarked, codeHit: codeHit, band: band, countedHits: countedHits, scoreAt: scoreAt, series: series,
     instrumentCheck: instrumentCheck, estimateQueries: estimateQueries
   };
 })();
@@ -397,7 +460,7 @@ function searchTerm_(term, opts) {
     (q.results || []).forEach(function (r) {
       if (seen[r.url]) return; seen[r.url] = 1;
       r.platform = q.platform === 'web' ? LexCore.platformOf(r.url) : q.platform;
-      var h = LexCore.codeHit(term, r, s);
+      var h = LexCore.codeHit(term, r, s, { keepNear: !!opts.keepNear });
       if (h) out.push(h);
     });
   });
@@ -511,7 +574,7 @@ function handle_(req) {
   if (a === 'search') {
     t = LexCore.normTerm(req.term || {});
     if (!t.word) throw new Error('Enter a word to search.');
-    var res = searchTerm_(t, { recent: req.recent || '', fresh: !!req.fresh });
+    var res = searchTerm_(t, { recent: req.recent || '', fresh: !!req.fresh, keepNear: true });
     return { ok: true, term: t, hits: res.hits, read: res.read, queries: res.queries, cachedQueries: res.cachedQueries, errors: res.errors, provider: res.provider, usage: usage_() };
   }
   if (a === 'term') { t = terms_().filter(function (x) { return x.id === req.id; })[0]; if (!t) throw new Error('Term not found.'); delete t._row; return { ok: true, term: t }; }

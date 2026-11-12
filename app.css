@@ -83,3 +83,12 @@ td select{padding:3px 6px;font-size:13px;width:auto}
 .busy{opacity:.55;pointer-events:none}
 @media (max-width:560px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tcard .big{font-size:24px}.top{gap:8px}nav{order:3;flex-basis:100%}.tools{margin-left:auto}}
 @media (prefers-reduced-motion:no-preference){.tcard,button{transition:border-color .15s,background .15s}}
+.bands{display:grid;gap:10px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.band{display:grid;gap:2px;text-align:left;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-left-width:5px;padding:10px 12px;font-weight:400}
+.band .bn{font-family:var(--mono);font-size:30px;line-height:1}.band .bl{font-weight:600}.band .br{font-size:12px;color:var(--muted)}
+.band[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}.band[aria-pressed=true] .br{color:var(--bg);opacity:.75}
+.band.b-exact{border-left-color:var(--ok)}.band.b-close{border-left-color:var(--p-tiktok)}.band.b-similar{border-left-color:var(--warn)}.band.b-all{border-left-color:var(--muted)}
+.mpct{font-family:var(--mono);font-weight:500;font-size:13px;border-radius:6px;padding:1px 7px;border:1px solid currentColor;white-space:nowrap}
+.mpct.b-exact{color:var(--ok)}.mpct.b-close{color:var(--p-tiktok)}.mpct.b-similar{color:var(--warn)}.mpct.b-below{color:var(--muted)}
+details summary{cursor:pointer;font-weight:600}
+@media (max-width:560px){.bands{grid-template-columns:repeat(2,minmax(0,1fr))}}

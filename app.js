@@ -184,7 +184,7 @@
     return [f('forms', 'Other forms', '(comma separated)', 'kettled, kettler'),
       h('label', {}, h('span', { text: 'Kind of term' }), h('select', { name: 'kind' }, h('option', { value: 'new', selected: d.kind !== 'existing', text: 'New word' }), h('option', { value: 'existing', selected: d.kind === 'existing', text: 'Existing word, new meaning' }))),
       f('cues', 'Clue words for the new meaning', '(needed for an existing word)', 'quietly, angry, about to snap'), f('exclude', 'Words that signal an older meaning', '', 'police, tea, boil'),
-      compact ? null : f('meaning', 'Meaning', '', 'getting quietly angrier until you boil over', true), compact ? null : f('coiner', 'Coiner', '', 'Student name'),
+      f('meaning', 'Meaning', compact ? '(optional; sharpens the match %)' : '', 'getting quietly angrier until you boil over', true), compact ? null : f('coiner', 'Coiner', '', 'Student name'),
       compact ? null : f('owned', 'Coiner’s project accounts', '(their posts are "owned", not counted)', '@word.project'),
       compact ? null : h('label', {}, h('span', { text: 'Role' }), h('select', { name: 'role' }, h('option', { value: 'student', selected: d.role === 'student' || !d.role, text: 'Student term' }), h('option', { value: 'control', selected: d.role === 'control', text: 'Control (real slang)' }), h('option', { value: 'foil', selected: d.role === 'foil', text: 'Foil (invented word)' })))];
   }
@@ -192,27 +192,51 @@
   function viewSearch(app) {
     var d = (S.search && S.search.term) || { kind: 'new' }, perTerm = C.ONLINE.length;
     var form = h('form', { class: 'card stack', id: 'search-form', onsubmit: function (e) { e.preventDefault(); var o = readForm(form); if (!C.clean(o.word)) return toast('Enter a word to search.');
-        act({ action: 'search', term: o, recent: o.recent, fresh: !!o.fresh }).then(function (r) { if (r.ok) { S.search = r; S.search.recent = o.recent; refreshUsage(r.usage); render(); } }); } },
+        act({ action: 'search', term: o, recent: o.recent, fresh: !!o.fresh }).then(function (r) { if (r.ok) { S.search = r; S.search.recent = o.recent; S.band = 'all'; refreshUsage(r.usage); render(); } }); } },
       h('div', { class: 'searchbar' }, h('input', { name: 'word', value: d.word || '', placeholder: 'Type a word or phrase', 'aria-label': 'Word to search', autocomplete: 'off', autofocus: true }), h('button', { type: 'submit', text: 'Search now' })),
       h('div', { class: 'form' }, termFields(d, true), h('label', {}, h('span', { text: 'How recent' }), h('select', { name: 'recent' }, [['', 'Any time'], ['week', 'Past week'], ['month', 'Past month']].map(function (o) { return h('option', { value: o[0], selected: (S.search && S.search.recent || '') === o[0], text: o[1] }); }))),
         h('label', { style: 'align-content:end' }, h('span', { class: 'row' }, h('input', { type: 'checkbox', name: 'fresh', style: 'width:auto' }), 'Skip the cache'))),
       h('p', { class: 'small muted', text: 'One search sends ' + perTerm + ' queries: TikTok, Instagram, Facebook, YouTube, X/Threads/Reddit and the rest of the web. Repeating the same search within 6 hours is free.' }));
     var out = h('div', { class: 'stack', id: 'search-results' });
     if (S.search) {
-      var r = S.search, by = {}; r.hits.forEach(function (x) { (by[x.platform] = by[x.platform] || []).push(x); });
-      var tgt = r.hits.filter(function (x) { return x.sense === 'target'; }).length;
-      out.appendChild(h('div', { class: 'card stack' }, h('div', { class: 'row spread' }, h('h2', { text: r.hits.length + (r.hits.length === 1 ? ' result contains "' : ' results contain "') + r.term.word + '"' }),
-        h('button', { type: 'button', text: 'Track this term', onclick: function () { S.draft = Object.assign({}, r.term, { id: null }); location.hash = '#/terms'; } })),
-        h('p', { class: 'small muted', text: tgt + ' coded as the new meaning. ' + r.queries + ' queries used' + (r.cachedQueries ? ', ' + r.cachedQueries + ' answered from the cache' : '') + (r.demo ? ' (demo results).' : ' via ' + r.provider + '.') + (r.errors.length ? ' Problems: ' + r.errors.join('; ') : '') }),
-        h('div', { class: 'chips' }, C.ONLINE.map(function (id) { return h('span', { class: 'chip' }, h('span', { class: 'key', style: 'background:' + cssVar(id) }), PF[id] + ': ' + ((by[id] || []).length) + ' of ' + (r.read[id] || 0) + ' read'); }))));
-      C.ONLINE.forEach(function (id) { if (!by[id]) return; out.appendChild(h('div', { class: 'card' }, h('h3', {}, h('span', { class: 'key', style: 'background:' + cssVar(id) }), PF[id]), by[id].map(hitCard))); });
-      if (!r.hits.length) out.appendChild(h('p', { class: 'card', text: 'Nothing found that actually contains the word. For a newly coined word, that is the expected baseline.' }));
+      var r = S.search, band = S.band || 'all', counts = { exact: 0, close: 0, similar: 0, below: 0 }, byPf = {};
+      r.hits.forEach(function (x) { if (!x.match) x.match = C.matchScore(r.term, x) || { pct: 0, band: 'below', why: 'No match in the title or snippet' }; counts[x.match.band]++;
+        var b = byPf[x.platform] = byPf[x.platform] || { exact: 0, close: 0, similar: 0, below: 0 }; b[x.match.band]++; });
+      var shown = r.hits.filter(function (x) { return band === 'all' || x.match.band === band; }).sort(function (a, b) { return b.match.pct - a.match.pct; });
+      var by = {}; shown.forEach(function (x) { (by[x.platform] = by[x.platform] || []).push(x); });
+      var bandBtn = function (id, n) { return h('button', { type: 'button', class: 'band b-' + id, 'data-band': id, 'aria-pressed': String(band === id), onclick: function () { S.band = id; render(); var el = $('#search-list'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } },
+        h('span', { class: 'bn', text: n }), h('span', { class: 'bl', text: BANDS[id][0] }), h('span', { class: 'br', text: BANDS[id][1] })); };
+      var near = r.hits.filter(function (x) { return x.match.keyword === 'near'; }).length;
+      out.appendChild(h('section', { class: 'card stack', id: 'search-summary', 'aria-label': 'Summary of results' },
+        h('div', { class: 'row spread' }, h('h2', { text: 'Summary: ' + r.hits.length + (r.hits.length === 1 ? ' result for "' : ' results for "') + r.term.word + '"' }),
+          h('button', { type: 'button', text: 'Track this term', onclick: function () { S.draft = Object.assign({}, r.term, { id: null }); location.hash = '#/terms'; } })),
+        h('p', { class: 'small muted', text: (r.term.kind === 'existing' ? 'Existing word, new meaning' : 'New word') + (r.term.meaning ? ': ' + r.term.meaning + '.' : '.') + (r.term.forms.length ? ' Other forms: ' + r.term.forms.join(', ') + '.' : '') +
+          (r.term.kind === 'existing' && !r.term.cues.length ? ' No clue words were given, so no result can reach 100%.' : '') }),
+        h('div', { class: 'bands', role: 'group', 'aria-label': 'Filter results by match' }, bandBtn('exact', counts.exact), bandBtn('close', counts.close), bandBtn('similar', counts.similar), bandBtn('all', r.hits.length)),
+        h('div', { class: 'scroll' }, h('table', { id: 'summary-table' }, h('thead', {}, h('tr', {}, h('th', { text: 'Setting' }), h('th', { class: 'n', text: 'Results read' }), h('th', { class: 'n', text: 'Exact' }), h('th', { class: 'n', text: 'Close' }), h('th', { class: 'n', text: 'Similar' }), h('th', { class: 'n', text: 'Under 60%' }))),
+          h('tbody', {}, C.ONLINE.map(function (id) { var b = byPf[id] || { exact: 0, close: 0, similar: 0, below: 0 }; return h('tr', {}, h('td', {}, h('span', { class: 'key', style: 'background:' + cssVar(id) }), PF[id]), h('td', { class: 'n', text: r.read[id] || 0 }), h('td', { class: 'n', text: b.exact }), h('td', { class: 'n', text: b.close }), h('td', { class: 'n', text: b.similar }), h('td', { class: 'n', text: b.below })); })))),
+        h('p', { class: 'small muted', text: (counts.below ? counts.below + ' under 60% (shown under All). ' : '') + (near ? near + ' near ' + (near === 1 ? 'match is' : 'matches are') + ' shown here only: a near match is never stored or counted. ' : '') +
+          r.queries + ' queries used' + (r.cachedQueries ? ', ' + r.cachedQueries + ' answered from the cache' : '') + (r.demo ? ' (simulated results).' : ' via ' + r.provider + '.') + (r.errors.length ? ' Problems: ' + r.errors.join('; ') : '') }),
+        h('details', { class: 'small' }, h('summary', { text: 'How the match % is worked out' }),
+          h('p', { class: 'muted', text: 'Match % = keyword points (up to 60) + meaning points (up to 40), read from the title and snippet of each result.' }),
+          h('ul', { class: 'check muted' }, h('li', { text: 'Keyword: the exact word 60; only as a hashtag or joined-up phrase 57; one of your listed forms 54; a near match (an unlisted ending such as -ing or -s, a one-letter misspelling of a new word, or the words of a phrase apart) 38.' }),
+            h('li', { text: 'Meaning: new meaning 40 (a new word with no older-meaning word, or an existing word with a clue word); unclear 25, or 30 if words from the Meaning box appear; older meaning 5.' }),
+            h('li', { text: '100% is the exact word with the new meaning. A result with nothing like the word in its title or snippet is left out.' })))));
+      var listBox = h('div', { class: 'stack', id: 'search-list' });
+      listBox.appendChild(h('h3', { text: band === 'all' ? 'All results, best match first' : BANDS[band][0] + ' (' + BANDS[band][1] + '): ' + shown.length + (shown.length === 1 ? ' result' : ' results') }));
+      C.ONLINE.forEach(function (id) { if (!by[id]) return; listBox.appendChild(h('div', { class: 'card' }, h('h3', {}, h('span', { class: 'key', style: 'background:' + cssVar(id) }), PF[id] + ' (' + by[id].length + ')'), by[id].map(hitCard))); });
+      if (!r.hits.length) listBox.appendChild(h('p', { class: 'card', text: 'Nothing found that contains the word or anything close to it. For a newly coined word, that is the expected baseline.' }));
+      else if (!shown.length) listBox.appendChild(h('p', { class: 'card', text: 'No results in this group. Choose All to see every result.' }));
+      out.appendChild(listBox);
     }
     app.replaceChildren(h('h1', { text: 'Search a word' }), form, out);
   }
+  var BANDS = { exact: ['Exact', '100%'], close: ['Close match', '80 to 99%'], similar: ['Similar', '60 to 79%'], all: ['All', 'every result'], below: ['Under 60%', 'under 60%'] };
   function hitCard(x) {
-    return h('div', { class: 'hit' }, x.url ? h('a', { href: x.url, target: '_blank', rel: 'noopener noreferrer', text: x.title || x.url }) : h('b', { text: x.title }), h('span', { class: 'small', text: x.snippet }),
-      h('span', { class: 'chips' }, pill(LABEL.sense[x.sense], x.sense === 'target' ? 'ok' : x.sense === 'unclear' ? 'warn' : 'muted'), pill(LABEL.ownership[x.ownership], 'muted'), pill(LABEL.marked[x.marked], 'muted'), x.form !== 'verbatim' ? pill('Form: ' + x.form, 'muted') : null, x.pubDate ? pill(x.pubDate, 'muted') : null, pill(C.userCode(x.user), 'muted')));
+    var m = x.match || { pct: 0, band: 'below', why: '' };
+    return h('div', { class: 'hit', 'data-band': m.band }, h('span', { class: 'row' }, h('span', { class: 'mpct b-' + m.band, text: m.pct + '%' }), h('span', { class: 'small muted', text: BANDS[m.band][0] + ': ' + m.why })),
+      x.url ? h('a', { href: x.url, target: '_blank', rel: 'noopener noreferrer', text: x.title || x.url }) : h('b', { text: x.title }), h('span', { class: 'small', text: x.snippet }),
+      h('span', { class: 'chips' }, pill(LABEL.sense[x.sense], x.sense === 'target' ? 'ok' : x.sense === 'unclear' ? 'warn' : 'muted'), pill(LABEL.ownership[x.ownership], 'muted'), pill(LABEL.marked[x.marked], 'muted'), x.near ? pill('Near match: not countable', 'warn') : x.form !== 'verbatim' ? pill('Form: ' + x.form, 'muted') : null, x.pubDate ? pill(x.pubDate, 'muted') : null, pill(C.userCode(x.user), 'muted')));
   }
   function refreshUsage(u) { if (u && S.state) S.state.usage = u; }
 

@@ -155,7 +155,7 @@ function searchTerm_(term, opts) {
     (q.results || []).forEach(function (r) {
       if (seen[r.url]) return; seen[r.url] = 1;
       r.platform = q.platform === 'web' ? LexCore.platformOf(r.url) : q.platform;
-      var h = LexCore.codeHit(term, r, s);
+      var h = LexCore.codeHit(term, r, s, { keepNear: !!opts.keepNear });
       if (h) out.push(h);
     });
   });
@@ -269,7 +269,7 @@ function handle_(req) {
   if (a === 'search') {
     t = LexCore.normTerm(req.term || {});
     if (!t.word) throw new Error('Enter a word to search.');
-    var res = searchTerm_(t, { recent: req.recent || '', fresh: !!req.fresh });
+    var res = searchTerm_(t, { recent: req.recent || '', fresh: !!req.fresh, keepNear: true });
     return { ok: true, term: t, hits: res.hits, read: res.read, queries: res.queries, cachedQueries: res.cachedQueries, errors: res.errors, provider: res.provider, usage: usage_() };
   }
   if (a === 'term') { t = terms_().filter(function (x) { return x.id === req.id; })[0]; if (!t) throw new Error('Term not found.'); delete t._row; return { ok: true, term: t }; }
