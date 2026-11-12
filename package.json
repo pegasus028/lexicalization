@@ -1,11 +1,11 @@
 {
   "name": "lexicalization",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Search and track the uptake of newly coined words across social platforms and the web.",
   "scripts": {
     "build": "node tools/build.js",
-    "test": "node tools/build.js && node tests/core.test.js && node tests/backend.test.js",
+    "test": "node tools/build.js && node tests/core.test.js && node tests/match.test.js && node tests/backend.test.js",
     "test:browser": "node tests/browser.test.js"
   }
 }

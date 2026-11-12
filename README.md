@@ -31,6 +31,27 @@ Search providers supported (set one key; see SETUP.md). Prices checked 11 Nov 20
 - **Brave Search API**: US$5 per 1,000 queries with US$5 of free credit each month, so about 1,000 free queries a month.
 - Google's own Custom Search JSON API is closed to new customers and stops on 1 Jan 2027, so it is not used.
 
+## Match % on the Search screen
+
+Every search result gets a match %, read from its title and snippet, and the summary at the top counts the results in three groups. The buttons filter the list.
+
+| Group | Match | Typical result |
+|---|---|---|
+| Exact | 100% | The exact word with the new meaning |
+| Close match | 80 to 99% | Hashtag only, a listed form, or the exact word with the meaning unclear |
+| Similar | 60 to 79% | A listed form with the meaning unclear, or a near match |
+| All | every result | Also shows results under 60%, such as an older meaning |
+
+**Match % = keyword points (up to 60) + meaning points (up to 40).**
+
+- Keyword: the exact word 60; only as a hashtag or a joined-up phrase 57; one of the listed forms 54; a near match 38. A near match is an unlisted ending (`-s`, `-ing`, `-ed`, `-er`, `-y`, `-ish`, including a dropped final `e` or a doubled consonant), a one-letter misspelling of a **new** word of 5 or more letters, or the words of a phrase appearing apart.
+- Meaning: new meaning 40 (a new word with no older-meaning word; an existing word with a clue word and no older-meaning word); unclear 25, or 30 when words from the Meaning box appear; an older meaning takes 5 points off, so it always lands under 60%.
+- A result with nothing like the word in its title or snippet is left out.
+
+Near matches are shown on the Search screen only. They are never stored or counted by a tracked run; if a near match is a real new form of the word, add it to the term's forms. An existing word searched with no clue words cannot reach 100%.
+
+In demo mode (`?demo=1`) searches are simulated: any word typed gets a spread of invented results across all groups, for both new and existing words.
+
 ## What counts
 
 A **counted use** carries the new meaning, comes from someone who is not the coiner, a classmate or the teacher, was not asked for, and was not already online at the baseline run. One user adds at most 3 a week.
@@ -65,7 +86,7 @@ js/core.js                    query building, hit coding, scoring (shared with t
 js/demo.js                    simulated data and an in-browser stand-in for the backend
 gs-src/main.gs                backend source
 Code.gs                       GENERATED: paste this into Apps Script (node tools/build.js)
-tests/                        core, backend (mocked Apps Script) and browser tests
+tests/                        core, match-score vectors, backend (mocked Apps Script) and browser tests
 ```
 
 Edit `gs-src/main.gs` or `js/core.js`, never `Code.gs`. Then:

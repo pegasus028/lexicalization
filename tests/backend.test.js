@@ -57,5 +57,13 @@ ok('formula injection is neutralised and delete purges', () => {
   assert.ok(env.sheets.Hits.some(r => r.includes("'=HYPERLINK(\"x\")")));
   assert.equal(call({ action: 'deleteTerm', pin: '4321', id }).ok, true); assert.equal(call({ action: 'hits', pin: '4321', id }).hits.length, 0); assert.equal(call({ action: 'state' }).terms.length, 9);
 });
+ok('search keeps near matches with a match %, a tracked run never stores them', () => {
+  const pg = { tiktok: [{ link: 'https://www.tiktok.com/@a/video/1', title: 'pure glorpish energy', snippet: '' }, { link: 'https://www.tiktok.com/@b/video/2', title: 'stop glorpishing', snippet: '' }, { link: 'https://www.tiktok.com/@c/video/3', title: 'nothing relevant', snippet: '' }] };
+  const e3 = makeEnv({ Date: FakeDate, props: { TEACHER_PIN: '1', SERPER_API_KEY: 'k' }, search: (r, resp) => { const q = JSON.parse(r.payload).q; return resp(200, { organic: q.includes('site:tiktok.com') && !q.includes('-site:tiktok') ? pg.tiktok : [] }); } });
+  const r = e3.call({ action: 'search', pin: '1', term: { word: 'glorpish' } }); assert.equal(r.hits.length, 2);
+  assert.deepEqual(r.hits.map(h => [h.match.pct, h.match.band, h.near]), [[100, 'exact', false], [78, 'similar', true]]);
+  const t = e3.call({ action: 'saveTerm', pin: '1', term: { word: 'glorpish' } }).term; e3.call({ action: 'runNow', pin: '1', id: t.id });
+  const stored = e3.call({ action: 'hits', pin: '1', id: t.id }).hits; assert.equal(stored.length, 1); assert.ok(stored[0].url.includes('@a'));
+});
 ok('no provider key gives a clear error', () => { const e2 = makeEnv({ props: { TEACHER_PIN: '1' } }); assert.ok(e2.call({ action: 'search', pin: '1', term: { word: 'x' } }).error.includes('No search key')); });
 console.log('backend tests passed:', n);

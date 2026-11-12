@@ -220,7 +220,7 @@
         h('details', { class: 'small' }, h('summary', { text: 'How the match % is worked out' }),
           h('p', { class: 'muted', text: 'Match % = keyword points (up to 60) + meaning points (up to 40), read from the title and snippet of each result.' }),
           h('ul', { class: 'check muted' }, h('li', { text: 'Keyword: the exact word 60; only as a hashtag or joined-up phrase 57; one of your listed forms 54; a near match (an unlisted ending such as -ing or -s, a one-letter misspelling of a new word, or the words of a phrase apart) 38.' }),
-            h('li', { text: 'Meaning: new meaning 40 (a new word with no older-meaning word, or an existing word with a clue word); unclear 25, or 30 if words from the Meaning box appear; older meaning 5.' }),
+            h('li', { text: 'Meaning: new meaning 40 (a new word with no older-meaning word, or an existing word with a clue word); unclear 25, or 30 if words from the Meaning box appear; older meaning minus 5, so it always falls under 60%.' }),
             h('li', { text: '100% is the exact word with the new meaning. A result with nothing like the word in its title or snippet is left out.' })))));
       var listBox = h('div', { class: 'stack', id: 'search-list' });
       listBox.appendChild(h('h3', { text: band === 'all' ? 'All results, best match first' : BANDS[band][0] + ' (' + BANDS[band][1] + '): ' + shown.length + (shown.length === 1 ? ' result' : ' results') }));

@@ -18,6 +18,25 @@ const url = 'file://' + path.join(__dirname, '..', 'index.html') + '?demo=1'; co
   // search
   await page.click('nav a:has-text("Search")'); await page.fill('#search-form input[name=word]', 'glorpish'); await page.click('#search-form button[type=submit]');
   await page.waitForSelector('#search-results .hit'); assert.ok((await page.textContent('#search-results h2')).includes('glorpish'));
+  // summary + match bands (simulated search, new word)
+  const bandN = async (b) => +(await page.textContent(`#search-summary .band[data-band=${b}] .bn`));
+  const total = await bandN('all'); assert.ok(total >= 10); assert.ok(await bandN('exact') > 0 && await bandN('close') > 0 && await bandN('similar') > 0);
+  assert.equal(await page.locator('#search-list .hit').count(), total);
+  for (const b of ['exact', 'close', 'similar']) { await page.click(`#search-summary .band[data-band=${b}]`); const n = await bandN(b);
+    assert.equal(await page.locator('#search-list .hit').count(), n, b + ' filter count'); assert.equal(await page.locator(`#search-list .hit:not([data-band=${b}])`).count(), 0);
+    const pcts = await page.locator('#search-list .mpct').allTextContents(); pcts.forEach(t => { const v = parseInt(t); assert.ok(b === 'exact' ? v === 100 : b === 'close' ? v >= 80 && v <= 99 : v >= 60 && v <= 79, b + ' ' + t); }); }
+  if (shots) await page.screenshot({ path: shots + '/search-new-close.png', fullPage: true });
+  await page.click('#search-summary .band[data-band=all]'); assert.equal(await page.locator('#search-list .hit').count(), total);
+  assert.equal(await page.locator('#summary-table tbody tr').count(), 6);
+  // simulated search, existing word with clue and older-meaning words
+  await page.fill('#search-form input[name=word]', 'kettling'); await page.fill('#search-form input[name=forms]', 'kettled, kettler'); await page.selectOption('#search-form select[name=kind]', 'existing');
+  await page.fill('#search-form input[name=cues]', 'quietly, angry, fine but'); await page.fill('#search-form input[name=exclude]', 'police, tea, boil'); await page.fill('#search-form input[name=meaning]', 'getting quietly angrier until you suddenly boil over');
+  await page.click('#search-form button[type=submit]'); await page.waitForFunction(() => /kettling/.test(document.querySelector('#search-summary h2').textContent));
+  const ex = await bandN('exact'), cl = await bandN('close'), si = await bandN('similar'), al = await bandN('all'); assert.ok(ex > 0 && cl > 0 && si > 0 && al > ex + cl + si, 'existing word spreads over all groups, with some under 60%');
+  assert.ok((await page.textContent('#search-summary')).includes('under 60%')); assert.ok(await page.locator('#search-list .hit:has-text("older meaning")').count() > 0);
+  if (shots) await page.screenshot({ path: shots + '/search-existing.png', fullPage: true });
+  await page.fill('#search-form input[name=word]', 'glorpish'); await page.fill('#search-form input[name=forms]', ''); await page.selectOption('#search-form select[name=kind]', 'new'); await page.fill('#search-form input[name=cues]', ''); await page.fill('#search-form input[name=exclude]', ''); await page.fill('#search-form input[name=meaning]', '');
+  await page.click('#search-form button[type=submit]'); await page.waitForFunction(() => /glorpish/.test(document.querySelector('#search-summary h2').textContent));
   if (shots) await page.screenshot({ path: shots + '/search.png', fullPage: true });
   // terms: full, delete one, add from search
   await page.click('#search-results button:has-text("Track this term")'); await page.waitForSelector('#slots');

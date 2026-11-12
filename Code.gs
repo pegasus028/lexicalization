@@ -104,7 +104,7 @@ var LexCore = (function () {
   function formRegex(f) { return new RegExp('(^|[^a-z0-9])(#?)' + esc(f.toLowerCase()).replace(/\\?[\s-]+/g, '[\\s-]*') + '(?![a-z0-9])', 'i'); }
   /* ---------- match score: how closely a result matches the keyword and the meaning ---------- */
   var KEYWORD_POINTS = { exact: 60, tag: 57, form: 54, near: 38 };
-  var MEANING_POINTS = { new: 40, unclear: 25, other: 5 };
+  var MEANING_POINTS = { new: 40, unclear: 25, other: -5 }; // an older meaning always lands under 60%
   var MEANING_BONUS = 5;
   var NEAR_SUFFIXES = ['ers', 'ing', 'ish', 'es', 'ed', 'er', 's', 'd', 'y'];
   var STOP = {};
@@ -134,7 +134,10 @@ var LexCore = (function () {
     if (best) return best;
     var p = parts(head), near = null;
     // (a) an unlisted inflection or derivative: headword + a common suffix
-    m = new RegExp('(^|[^a-z0-9])#?(' + p.join('[\\s-]*') + '(?:' + NEAR_SUFFIXES.join('|') + '))(?![a-z0-9])', 'i').exec(t);
+    var lastW = p[p.length - 1], stems = [lastW + '(?:' + NEAR_SUFFIXES.join('|') + ')'];
+    if (/[a-z]e$/.test(lastW)) stems.push(lastW.slice(0, -1) + '(?:ing|ed|er|ers|ish|y)');           // snackrifice: snackrificing
+    if (/[^aeiou][aeiou][^aeiouwxy]$/.test(lastW)) stems.push(lastW + lastW.slice(-1) + '(?:ing|ed|er|ers|y)'); // plotdrunk: no; yap: yapping
+    m = new RegExp('(^|[^a-z0-9])#?(' + p.slice(0, -1).concat(['(?:' + stems.join('|') + ')']).join('[\\s-]*') + ')(?![a-z0-9])', 'i').exec(t);
     if (m) near = m[2];
     // (b) a likely misspelling: one letter added, removed or changed. Only for coined words of 5+ letters,
     //     because the one-letter neighbours of an existing word are usually other real words (cooked / booked).
@@ -172,9 +175,15 @@ var LexCore = (function () {
   }
   // The form a countable hit uses, or null. Near matches are never countable.
   function findForm(term, text) { var k = keywordMatch(term, text); return k.level === 'none' || k.level === 'near' ? null : k.form; }
+  // Clue and older-meaning words match as standalone words. A single word also matches with a common
+  // ending (boil: boils, boiled, boiling); a phrase also matches with punctuation between its words (fine, but).
   function hasAny(words, text) {
     var t = lower(text);
-    return list(words).some(function (w) { return new RegExp('(^|[^a-z0-9])' + esc(lower(w)) + '(?![a-z0-9])', 'i').test(t); });
+    return list(words).some(function (w) {
+      var p = lower(w).split(/\s+/).filter(Boolean).map(esc); if (!p.length) return false;
+      var body = p.length > 1 ? p.join('[\\s,.;:!?\'"’-]+') : p[0] + (p[0].length >= 3 ? '(?:s|es|ed|d|ing)?' : '');
+      return new RegExp('(^|[^a-z0-9])' + body + '(?![a-z0-9])', 'i').test(t);
+    });
   }
   var MARKERS = /\b(means?|meaning|definition|defined as|define[sd]?|new word|new slang|slang for|slang term|is when|a word for|made[- ]up word|coined|urban dictionary)\b/i;
   function isMarked(term, text, settings) {

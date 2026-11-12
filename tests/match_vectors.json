@@ -1,0 +1,1893 @@
+[
+ {
+  "id": "v01",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@lunchbreak.lab/video/1",
+   "title": "Lunch break moment",
+   "snippet": "made the ultimate snackrifice today, my last cookie went to the new girl 🍪"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Plain headword, new word, no older-meaning word."
+ },
+ {
+  "id": "v02",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a1",
+   "title": "POV: last chip in the bag",
+   "snippet": "#snackrifice #lunchtime"
+  },
+  "expect": {
+   "keyword": "tag",
+   "meaning": "new",
+   "pct": 97,
+   "band": "close"
+  },
+  "why": "Headword only as a hashtag: 57 + 40."
+ },
+ {
+  "id": "v03",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@snackdiaries/video/2",
+   "title": "the snackrifice was real",
+   "snippet": "gave up my mochi without a fight #snackrifice"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Hashtag plus a plain occurrence in the same text counts as exact."
+ },
+ {
+  "id": "v04",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://facebook.com/groups/m4lunch/posts/3",
+   "title": "Sharing is caring",
+   "snippet": "I snackrificed my mango sticky rice for her and I regret nothing"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "new",
+   "pct": 94,
+   "band": "close"
+  },
+  "why": "Listed form only, headword absent: 54 + 40."
+ },
+ {
+  "id": "v05",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://x.com/crumbsonly/status/4",
+   "title": "Snackrificed again.",
+   "snippet": "Peak snackrifice behaviour from me this week"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Listed form plus headword: headword wins."
+ },
+ {
+  "id": "v06",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a5",
+   "title": "Lunch line",
+   "snippet": "#snackrificial energy only"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "new",
+   "pct": 94,
+   "band": "close"
+  },
+  "why": "Listed form as a hashtag still counts as form."
+ },
+ {
+  "id": "v07",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://youtube.com/watch?v=v6",
+   "title": "Counting all my snackrifices this term",
+   "snippet": "a ranking nobody asked for"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Unlisted inflection headword+s: near 38 + 40."
+ },
+ {
+  "id": "v08",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://reddit.com/r/teenslang/comments/7",
+   "title": "what a snackrifce lol",
+   "snippet": "she handed over the last dumpling"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Misspelling at edit distance 1 (missing i) on a 5+ letter word."
+ },
+ {
+  "id": "v09",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://reddit.com/r/teenslang/comments/8",
+   "title": "my snakrifce for the group",
+   "snippet": "the whole bag, gone"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Edit distance 2 (missing c and i) must not match."
+ },
+ {
+  "id": "v10",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@snackdiaries/video/9",
+   "title": "stop snackrificing your lunch for everyone",
+   "snippet": "you need to eat too"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "\"snackrificing\" is not headword+ing (that would be \"snackrificeing\") and is 3 edits away, so it is dropped by the spec.",
+  "revised": "Rule added: a final e is dropped before -ing, so snackrificing is a near match."
+ },
+ {
+  "id": "v11",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://www.example.com/news/10",
+   "title": "New Snackrifice brand chips drop next week",
+   "snippet": "limited flavours in stores"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "other",
+   "pct": 55,
+   "band": "below"
+  },
+  "why": "Older-meaning word \"brand\", no clue word: 60 + 5.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v12",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a11",
+   "title": "gave my bestie the last snack",
+   "snippet": "a true snackrifice. not a promo btw"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 90,
+   "band": "close"
+  },
+  "why": "Clue \"bestie\" and older word \"promo\" both present: unclear 25, +5 for \"snack\" from the Meaning sentence."
+ },
+ {
+  "id": "v13",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://facebook.com/snackhub/posts/12",
+   "title": "Snackrifice promo",
+   "snippet": "for you and your bestie, this weekend only"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 85,
+   "band": "close"
+  },
+  "why": "Clue and older word both present; no standalone Meaning content word (\"snack\" only occurs inside the headword), so no +5.",
+  "ambiguous": true,
+  "ambiguity": "Spec does not say whether Meaning content words match as standalone words or substrings; read as standalone like clue words. Substring reading would give 90."
+ },
+ {
+  "id": "v14",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://x.com/crumbsonly/status/13",
+   "title": "that snackrifice's worth it",
+   "snippet": "the look on her face"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Possessive \"snackrifice's\" treated as the listed near suffix 's.",
+  "ambiguity": "Spec lists 's as a near suffix, but a word-boundary regex treats the apostrophe as a boundary and would score exact (100). Chose near because the spec names 's explicitly.",
+  "revised": "Decision: a possessive is the headword itself, so it is exact."
+ },
+ {
+  "id": "v15",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://youtube.com/watch?v=v14",
+   "title": "“Snackrifice!”",
+   "snippet": "Is that what we're calling it now?"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Curly quotation marks and exclamation mark around the word."
+ },
+ {
+  "id": "v16",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@lunchbreak.lab/video/15",
+   "title": "it's #snackrificeszn at school",
+   "snippet": "everyone is sharing"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Headword only inside a longer hashtag; \"szn\" is not a listed suffix and edit distance is 3."
+ },
+ {
+  "id": "v17",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a16",
+   "title": "SNACKRIFICE OF THE YEAR",
+   "snippet": "nominees below"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Upper case."
+ },
+ {
+  "id": "v18",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://x.com/crumbsonly/status/17",
+   "title": "feeling very snackrificey today",
+   "snippet": "gave away two snacks already"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Headword+y suffix."
+ },
+ {
+  "id": "v19",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://www.example.com/shop/18",
+   "title": "Snackrificial promo pack",
+   "snippet": "3 bags for 99 baht"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "other",
+   "pct": 49,
+   "band": "below"
+  },
+  "why": "Listed form plus older word \"promo\": 54 + 5 = 59, below 60.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v20",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a19",
+   "title": "#snackrifice",
+   "snippet": "brand giveaway, enter now"
+  },
+  "expect": {
+   "keyword": "tag",
+   "meaning": "other",
+   "pct": 52,
+   "band": "below"
+  },
+  "why": "Hashtag only plus older word \"brand\": 57 + 5.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v21",
+  "term": {
+   "word": "snackrifice",
+   "forms": "snackrificed, snackrificial",
+   "kind": "new",
+   "cues": "friend, bestie",
+   "exclude": "brand, promo",
+   "meaning": "giving up your snack for a friend"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@snackdiaries/video/20",
+   "title": "snackrifice-level kindness",
+   "snippet": "shared my last cookie"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Hyphen after the headword is a word boundary."
+ },
+ {
+  "id": "v22",
+  "term": {
+   "word": "plotdrunk",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "so hooked on a story you keep reading all night"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@chapterchaser/video/21",
+   "title": "📖plotdrunk😵",
+   "snippet": "finished the whole series in one night"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Emoji directly against the word are boundaries."
+ },
+ {
+  "id": "v23",
+  "term": {
+   "word": "plotdrunk",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "so hooked on a story you keep reading all night"
+  },
+  "raw": {
+   "url": "https://facebook.com/groups/readingclub/posts/22",
+   "title": "อ่านนิยายทั้งคืนเลย plotdrunk สุดๆ",
+   "snippet": "ใครเป็นบ้าง"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "English word inside a Thai sentence, separated by spaces."
+ },
+ {
+  "id": "v24",
+  "term": {
+   "word": "plotdrunk",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "so hooked on a story you keep reading all night"
+  },
+  "raw": {
+   "url": "https://facebook.com/groups/readingclub/posts/23",
+   "title": "อ่านนิยายทั้งคืนจนplotdrunkไปเลย",
+   "snippet": "ตอนจบดีมาก"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "English word written against Thai letters with no spaces.",
+  "ambiguous": true,
+  "ambiguity": "Spec says \"word boundaries\" without defining them for non-Latin script. A Unicode-aware boundary (\\p{L}) would reject this; Thai is written without spaces, so Thai letters were treated as boundaries."
+ },
+ {
+  "id": "v25",
+  "term": {
+   "word": "plotdrunk",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "so hooked on a story you keep reading all night"
+  },
+  "raw": {
+   "url": "https://x.com/pagesbeforebed/status/24",
+   "title": "so plot drunk after that finale",
+   "snippet": "cannot sleep"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Single-word headword written as two words: no joined-form rule for single words and neither token is within edit distance 1."
+ },
+ {
+  "id": "v26",
+  "term": {
+   "word": "plotdrunk",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "so hooked on a story you keep reading all night"
+  },
+  "raw": {
+   "url": "https://x.com/pagesbeforebed/status/25",
+   "title": "so plot-drunk after that finale",
+   "snippet": "cannot sleep"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Hyphen splits the token, same as above.",
+  "ambiguous": true,
+  "ambiguity": "Spec does not define a token. If \"plot-drunk\" were one token it would be edit distance 1 (near, 78). Chose hyphen as a separator, consistent with how the exact level treats hyphens."
+ },
+ {
+  "id": "v27",
+  "term": {
+   "word": "plotdrunk",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "so hooked on a story you keep reading all night"
+  },
+  "raw": {
+   "url": "https://youtube.com/watch?v=v26",
+   "title": "The plotdrunker the better",
+   "snippet": "a booktok rant"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Headword+er suffix."
+ },
+ {
+  "id": "v28",
+  "term": {
+   "word": "plotdrunk",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "so hooked on a story you keep reading all night"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a27",
+   "title": "Book club update",
+   "snippet": "Chapter 30 and I'm completely PlotDrunk."
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Mixed case with a full stop."
+ },
+ {
+  "id": "v29",
+  "term": {
+   "word": "plotdrunk",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "so hooked on a story you keep reading all night"
+  },
+  "raw": {
+   "url": "https://reddit.com/r/booktok/comments/28",
+   "title": "plotdrank all weekend",
+   "snippet": "three books in two days"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Substitution u->a: edit distance 1 on a 9-letter word."
+ },
+ {
+  "id": "v30",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@corridorcam/video/29",
+   "title": "Aura farming at the bus stop",
+   "snippet": "like it is a music video"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Multi-word headword, words adjacent."
+ },
+ {
+  "id": "v31",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a30",
+   "title": "peak aura-farming behaviour",
+   "snippet": "sunglasses indoors"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Words joined by a hyphen count as adjacent."
+ },
+ {
+  "id": "v32",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a31",
+   "title": "hair flip at sports day",
+   "snippet": "#aurafarming #sportsday"
+  },
+  "expect": {
+   "keyword": "tag",
+   "meaning": "new",
+   "pct": 97,
+   "band": "close"
+  },
+  "why": "Joined hashtag only."
+ },
+ {
+  "id": "v33",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://x.com/vibesonly/status/32",
+   "title": "she has been aurafarming all week",
+   "snippet": "the walk, the stare"
+  },
+  "expect": {
+   "keyword": "tag",
+   "meaning": "new",
+   "pct": 97,
+   "band": "close"
+  },
+  "why": "Joined form without # also scores the tag level."
+ },
+ {
+  "id": "v34",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://youtube.com/watch?v=v33",
+   "title": "Farming that aura for the class photo",
+   "snippet": "chin up, eyes left"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Both words standalone but not adjacent (rule c)."
+ },
+ {
+  "id": "v35",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@corridorcam/video/34",
+   "title": "two aura farmings in one day",
+   "snippet": "a record"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Suffix s on the last word."
+ },
+ {
+  "id": "v36",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@corridorcam/video/35",
+   "title": "certified aura farmer in the corridor",
+   "snippet": "slow walk to class"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "\"farmer\" is not \"farming\"+suffix and edit distance is not used for multi-word headwords, so with no listed forms this is dropped."
+ },
+ {
+  "id": "v37",
+  "term": {
+   "word": "aura farming",
+   "forms": "aura farmer",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@corridorcam/video/36",
+   "title": "certified aura farmer in the corridor",
+   "snippet": "slow walk to class"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "new",
+   "pct": 94,
+   "band": "close"
+  },
+  "why": "Same text, but \"aura farmer\" is now a listed form."
+ },
+ {
+  "id": "v38",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://www.example.com/wellness/37",
+   "title": "Aura farming with crystal energy",
+   "snippet": "Calm your chakra and cleanse your space"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "other",
+   "pct": 55,
+   "band": "below"
+  },
+  "why": "Older-meaning words, no clue: 60 + 5.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v39",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://www.example.com/wellness/38",
+   "title": "aura, farming and crystal gardens",
+   "snippet": "a weekend workshop"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "other",
+   "pct": 33,
+   "band": "below"
+  },
+  "why": "Comma between the words is not \"spaces or hyphens\", so rule c (near); older word \"crystal\": 38 + 5.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v40",
+  "term": {
+   "word": "aura farming",
+   "forms": "",
+   "kind": "new",
+   "cues": "posing, edit",
+   "exclude": "crystal, chakra",
+   "meaning": "acting cool on purpose to look impressive"
+  },
+  "raw": {
+   "url": "https://youtube.com/watch?v=v39",
+   "title": "Aura farming or crystal posing?",
+   "snippet": "Either way, look impressive"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 90,
+   "band": "close"
+  },
+  "why": "Clue \"posing\" and older word \"crystal\": unclear 25, +5 for \"impressive\"/\"look\"."
+ },
+ {
+  "id": "v41",
+  "term": {
+   "word": "rizz",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "natural charm that wins people over"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a41",
+   "title": "my frizzy hair after the rain",
+   "snippet": "humidity is undefeated"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "\"rizz\" inside \"frizzy\" is not a match; prefix is not a suffix rule."
+ },
+ {
+  "id": "v42",
+  "term": {
+   "word": "rizz",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "natural charm that wins people over"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@hallwaychat/video/42",
+   "title": "rizzz queen",
+   "snippet": "the confidence"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Extra letter on a 4-letter headword: no edit-distance matching for 4 letters or fewer, and \"z\" is not a listed suffix."
+ },
+ {
+  "id": "v43",
+  "term": {
+   "word": "rizz",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "natural charm that wins people over"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@hallwaychat/video/43",
+   "title": "that was so rizzy",
+   "snippet": "how did she do that"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Headword+y suffix still applies to short words."
+ },
+ {
+  "id": "v44",
+  "term": {
+   "word": "rizz",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "natural charm that wins people over"
+  },
+  "raw": {
+   "url": "https://x.com/hallwaychat/status/44",
+   "title": "zero riz today",
+   "snippet": "tired"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Deletion on a 4-letter headword: no edit-distance match."
+ },
+ {
+  "id": "v45",
+  "term": {
+   "word": "rizz",
+   "forms": "",
+   "kind": "new",
+   "cues": "",
+   "exclude": "",
+   "meaning": "natural charm that wins people over"
+  },
+  "raw": {
+   "url": "https://reddit.com/r/teenslang/comments/45",
+   "title": "'rizz' is in the dictionary now??",
+   "snippet": "thoughts"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Single quotation marks (apostrophes) around the word."
+ },
+ {
+  "id": "v46",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@quietstorm.m4/video/46",
+   "title": "smiling in class but kettling inside",
+   "snippet": "about to snap any second"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Phrase clue \"about to snap\", no older word."
+ },
+ {
+  "id": "v47",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://www.example.com/news/47",
+   "title": "Police kettling protesters in the city centre",
+   "snippet": "officers held the group for hours"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "other",
+   "pct": 55,
+   "band": "below"
+  },
+  "why": "Older word \"police\" (\"protesters\" is not \"protest\"), no clue: 60 + 5.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v48",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://x.com/quietstorm/status/48",
+   "title": "kettling all through maths",
+   "snippet": "then suddenly cried in the toilets"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 90,
+   "band": "close"
+  },
+  "why": "No clue, no older word: unclear 25, +5 for \"suddenly\"."
+ },
+ {
+  "id": "v49",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a49",
+   "title": "day 4 of exams",
+   "snippet": "kettling era"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 85,
+   "band": "close"
+  },
+  "why": "No clue, no older word, no Meaning content word: 60 + 25."
+ },
+ {
+  "id": "v50",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://facebook.com/groups/dorm/posts/50",
+   "title": "who left the kettle on?",
+   "snippet": "the whole floor smells of noodles"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "\"kettle\" is 3 edits from \"kettling\": must not match."
+ },
+ {
+  "id": "v51",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@quietstorm.m4/video/51",
+   "title": "kettling through team practice, so mad",
+   "snippet": "letting off steam later"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Older word \"tea\" inside \"team\"/\"steam\" does not count; clue \"mad\"."
+ },
+ {
+  "id": "v52",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://x.com/quietstorm/status/52",
+   "title": "I'm fine, but kettling",
+   "snippet": "do not talk to me"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Clue phrase \"fine but\" interrupted by a comma is not matched: unclear 85.",
+  "ambiguity": "Spec says phrases match as standalone phrases; it does not say whether punctuation between the words is allowed. Read literally (spaces only). A punctuation-tolerant reading gives 100.",
+  "revised": "Rule added: a clue phrase may have punctuation between its words."
+ },
+ {
+  "id": "v53",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a53",
+   "title": "kettling while boiling noodles",
+   "snippet": "dinner for one"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "other",
+   "pct": 55,
+   "band": "below"
+  },
+  "why": "\"boiling\" is not the older word \"boil\"; no clue: unclear 85.",
+  "revised": "Rule added: clue and older-meaning words also match with a common ending (boiling)."
+ },
+ {
+  "id": "v54",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://facebook.com/groups/dorm/posts/54",
+   "title": "she kettled for a week",
+   "snippet": "then exploded at dinner time"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "unclear",
+   "pct": 79,
+   "band": "similar"
+  },
+  "why": "Listed form, no clue, no older word, no Meaning content word: 54 + 25 = 79."
+ },
+ {
+  "id": "v55",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://x.com/quietstorm/status/55",
+   "title": "totally kettled",
+   "snippet": "then suddenly screamed into a pillow"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "unclear",
+   "pct": 84,
+   "band": "close"
+  },
+  "why": "Listed form, unclear, +5 for \"suddenly\": 84 (Close)."
+ },
+ {
+  "id": "v56",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@quietstorm.m4/video/56",
+   "title": "kettled so quietly",
+   "snippet": "nobody noticed"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "new",
+   "pct": 94,
+   "band": "close"
+  },
+  "why": "Listed form plus clue \"quietly\"."
+ },
+ {
+  "id": "v57",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://www.example.com/news/57",
+   "title": "Crowd kettled by officers",
+   "snippet": "for six hours downtown"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "other",
+   "pct": 49,
+   "band": "below"
+  },
+  "why": "Listed form plus older word \"crowd\": 54 + 5.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v58",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a58",
+   "title": "smiling but so mad",
+   "snippet": "#kettling #mondays"
+  },
+  "expect": {
+   "keyword": "tag",
+   "meaning": "new",
+   "pct": 97,
+   "band": "close"
+  },
+  "why": "Hashtag only plus clue \"mad\"."
+ },
+ {
+  "id": "v59",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://x.com/citydesk/status/59",
+   "title": "#kettling at the protest today",
+   "snippet": "stay safe everyone"
+  },
+  "expect": {
+   "keyword": "tag",
+   "meaning": "other",
+   "pct": 52,
+   "band": "below"
+  },
+  "why": "Hashtag only plus older word \"protest\".",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v60",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://youtube.com/watch?v=v60",
+   "title": "my kettlings this week, ranked",
+   "snippet": "all three were about to snap moments"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "new",
+   "pct": 78,
+   "band": "similar"
+  },
+  "why": "Headword+s suffix plus phrase clue."
+ },
+ {
+  "id": "v61",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://reddit.com/r/teenslang/comments/61",
+   "title": "ketling through the whole lesson",
+   "snippet": "just staring at the board"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Edit distance 1 (missing t), no clue, no older word: 38 + 25.",
+  "revised": "Decision: no one-letter misspelling matches for existing words (their neighbours are real words)."
+ },
+ {
+  "id": "v62",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://reddit.com/r/teenslang/comments/62",
+   "title": "kettlin all day",
+   "snippet": "then suddenly cried"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Edit distance 1 (missing g), unclear +5 for \"suddenly\": 38 + 30.",
+  "revised": "Decision: no one-letter misspelling matches for existing words."
+ },
+ {
+  "id": "v63",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://www.example.com/news/63",
+   "title": "kettlings by police",
+   "snippet": "reported in three cities"
+  },
+  "expect": {
+   "keyword": "near",
+   "meaning": "other",
+   "pct": 33,
+   "band": "below"
+  },
+  "why": "Near suffix plus older word \"police\": 38 + 5.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v64",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@quietstorm.m4/video/64",
+   "title": "kettling about spilled tea",
+   "snippet": "quietly furious"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 90,
+   "band": "close"
+  },
+  "why": "Clue \"quietly\" and older word \"tea\" both present: unclear 25, +5 because \"quietly\" is also a Meaning content word."
+ },
+ {
+  "id": "v65",
+  "term": {
+   "word": "kettling",
+   "forms": "kettled, kettler",
+   "kind": "existing",
+   "cues": "quietly, angry, mad, fine but, about to snap",
+   "exclude": "police, protest, tea, boil, crowd",
+   "meaning": "getting quietly angrier until you suddenly boil over"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a65",
+   "title": "Kettler of the year 🏆",
+   "snippet": "it is me"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "unclear",
+   "pct": 79,
+   "band": "similar"
+  },
+  "why": "Listed form \"kettler\" at sentence start with emoji; no clue/older/content word."
+ },
+ {
+  "id": "v66",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@deskdrama/video/66",
+   "title": "We are so cooked",
+   "snippet": "maths test tomorrow and I know nothing"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Clue \"test\", no older word."
+ },
+ {
+  "id": "v67",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://youtube.com/watch?v=v67",
+   "title": "Perfectly cooked chicken in 20 minutes",
+   "snippet": "easy weeknight meal"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "other",
+   "pct": 55,
+   "band": "below"
+  },
+  "why": "Older word \"chicken\", no clue.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v68",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a68",
+   "title": "cooked dinner during the exam break",
+   "snippet": "brain needed fuel"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 85,
+   "band": "close"
+  },
+  "why": "Clue \"exam\" and older word \"dinner\" both present; no Meaning content word."
+ },
+ {
+  "id": "v69",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://x.com/deskdrama/status/69",
+   "title": "bro is cooked",
+   "snippet": "serious trouble after that group project"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 90,
+   "band": "close"
+  },
+  "why": "No clue, no older word; +5 for \"serious\"/\"trouble\"."
+ },
+ {
+  "id": "v70",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://x.com/deskdrama/status/70",
+   "title": "I looked at the test and froze",
+   "snippet": "blank page energy"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "\"looked\" is 1 edit from \"cooked\" (5+ letters) so it is a near match; clue \"test\" gives new meaning.",
+  "revised": "Decision: no one-letter misspelling matches for existing words (looked is a real word)."
+ },
+ {
+  "id": "v71",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://www.example.com/recipes/71",
+   "title": "Pressure cooker recipe for jasmine rice",
+   "snippet": "ready in 15 minutes"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "\"cooker\" is 1 edit from \"cooked\"; older word \"recipe\".",
+  "revised": "Decision: no one-letter misspelling matches for existing words (cooker)."
+ },
+ {
+  "id": "v72",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@deskdrama/video/72",
+   "title": "overcooked the essay again",
+   "snippet": "too many big words"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Prefix \"over\" is not a rule; edit distance 4."
+ },
+ {
+  "id": "v73",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://facebook.com/groups/dorm/posts/73",
+   "title": "can't cook, won't cook",
+   "snippet": "instant noodles forever"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "\"cook\" is 2 edits from \"cooked\"."
+ },
+ {
+  "id": "v74",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a74",
+   "title": "finals week",
+   "snippet": "the chat is full of doomed memes #cooked"
+  },
+  "expect": {
+   "keyword": "tag",
+   "meaning": "new",
+   "pct": 97,
+   "band": "close"
+  },
+  "why": "Hashtag only plus clues \"chat\"/\"doomed\"."
+ },
+ {
+  "id": "v75",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a75",
+   "title": "sunday meal prep",
+   "snippet": "#cookedchicken #mealprep"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "Headword only inside a longer hashtag."
+ },
+ {
+  "id": "v76",
+  "term": {
+   "word": "cooked",
+   "forms": "",
+   "kind": "existing",
+   "cues": "doomed, exam, test, chat",
+   "exclude": "chicken, dinner, oven, recipe",
+   "meaning": "doomed, in serious trouble with no way out"
+  },
+  "raw": {
+   "url": "https://reddit.com/r/teenslang/comments/76",
+   "title": "COOKED.",
+   "snippet": "exam in an hour"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Upper case with full stop; clue \"exam\"."
+ },
+ {
+  "id": "v77",
+  "term": {
+   "word": "tabbed",
+   "forms": "tabbing",
+   "kind": "existing",
+   "cues": "zoned, spaced, class",
+   "exclude": "browser, chrome, keyboard",
+   "meaning": "mentally zoned out as if your mind switched tabs"
+  },
+  "raw": {
+   "url": "https://tiktok.com/@backrowview/video/77",
+   "title": "tabbing out in class again",
+   "snippet": "teacher asked me a question and I had nothing"
+  },
+  "expect": {
+   "keyword": "form",
+   "meaning": "new",
+   "pct": 94,
+   "band": "close"
+  },
+  "why": "Listed form plus clue \"class\"."
+ },
+ {
+  "id": "v78",
+  "term": {
+   "word": "tabbed",
+   "forms": "tabbing",
+   "kind": "existing",
+   "cues": "zoned, spaced, class",
+   "exclude": "browser, chrome, keyboard",
+   "meaning": "mentally zoned out as if your mind switched tabs"
+  },
+  "raw": {
+   "url": "https://youtube.com/watch?v=v78",
+   "title": "dabbed after scoring the goal",
+   "snippet": "sports day highlights"
+  },
+  "expect": {
+   "keyword": "none",
+   "meaning": null,
+   "pct": null,
+   "band": "dropped"
+  },
+  "why": "\"dabbed\" is 1 edit from \"tabbed\": near, no clue/older word.",
+  "revised": "Decision: no one-letter misspelling matches for existing words (dabbed)."
+ },
+ {
+  "id": "v79",
+  "term": {
+   "word": "tabbed",
+   "forms": "tabbing",
+   "kind": "existing",
+   "cues": "zoned, spaced, class",
+   "exclude": "browser, chrome, keyboard",
+   "meaning": "mentally zoned out as if your mind switched tabs"
+  },
+  "raw": {
+   "url": "https://www.example.com/tech/79",
+   "title": "Tabbed browser windows in Chrome",
+   "snippet": "a quick guide"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "other",
+   "pct": 55,
+   "band": "below"
+  },
+  "why": "Older words \"browser\"/\"Chrome\", no clue.",
+  "revised": "Rule changed: an older meaning scores keyword points minus 5, so it always falls under 60%."
+ },
+ {
+  "id": "v80",
+  "term": {
+   "word": "tabbed",
+   "forms": "tabbing",
+   "kind": "existing",
+   "cues": "zoned, spaced, class",
+   "exclude": "browser, chrome, keyboard",
+   "meaning": "mentally zoned out as if your mind switched tabs"
+  },
+  "raw": {
+   "url": "https://instagram.com/p/a80",
+   "title": "totally tabbed in class today",
+   "snippet": "zoned for the whole period"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "new",
+   "pct": 100,
+   "band": "exact"
+  },
+  "why": "Clues \"class\"/\"zoned\"."
+ },
+ {
+  "id": "v81",
+  "term": {
+   "word": "tabbed",
+   "forms": "tabbing",
+   "kind": "existing",
+   "cues": "zoned, spaced, class",
+   "exclude": "browser, chrome, keyboard",
+   "meaning": "mentally zoned out as if your mind switched tabs"
+  },
+  "raw": {
+   "url": "https://x.com/backrowview/status/81",
+   "title": "tabbed, in the browser of my mind",
+   "snippet": "spaced through physics"
+  },
+  "expect": {
+   "keyword": "exact",
+   "meaning": "unclear",
+   "pct": 90,
+   "band": "close"
+  },
+  "why": "Clue \"spaced\" and older word \"browser\": unclear 25, +5 for \"mind\"."
+ }
+]

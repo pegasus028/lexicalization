@@ -81,17 +81,266 @@ var LexDemo = (function () {
   // its hashtag, a listed form, an unlisted ending, a clue word and an older-meaning word, so the
   // results spread across the match bands for both new words and existing words.
   /*TPL-START*/
-  var TPL = { new: [{ platform: 'tiktok', user: 'tt:demo.viewer', title: 'honestly {w} is the whole mood this week', snippet: 'Simulated result.', intent: 'exact' }],
-    existing: [{ platform: 'tiktok', user: 'tt:demo.viewer', title: 'so {w}, {cue}', snippet: 'Simulated result.', intent: 'exact' }] };
+  var TPL = {
+   "new": [
+    {
+     "platform": "tiktok",
+     "user": "tt:lunchbreak.lab",
+     "title": "POV: the only word that fits is {w}",
+     "snippet": "said {w} once at lunch and now the whole table says it 😭",
+     "intent": "exact"
+    },
+    {
+     "platform": "tiktok",
+     "user": "tt:hallway.diaries",
+     "title": "Rating today on the {w} scale",
+     "snippet": "honestly a solid 9/10. {W} all the way.",
+     "intent": "exact"
+    },
+    {
+     "platform": "tiktok",
+     "user": "tt:afterschool.vibes",
+     "title": "this one is for the group chat",
+     "snippet": "no caption needed #{tag} #fyp",
+     "intent": "close"
+    },
+    {
+     "platform": "instagram",
+     "user": "ig:sunset.notes",
+     "title": "Weekend dump 📸",
+     "snippet": "{W}. That is the post. That is the caption.",
+     "intent": "exact"
+    },
+    {
+     "platform": "instagram",
+     "user": "ig:study.corner.daily",
+     "title": "Library era",
+     "snippet": "seven hours in and still going #{tag} #studygram",
+     "intent": "close"
+    },
+    {
+     "platform": "instagram",
+     "user": "ig:minimal.moods",
+     "title": "New word just dropped?",
+     "snippet": "seeing {form} all over my feed this week, it is spreading fast",
+     "intent": "close"
+    },
+    {
+     "platform": "facebook",
+     "user": "fb:teen.word.watch",
+     "title": "What does {w} mean?",
+     "snippet": "Members keep using {w} in the comments. From the replies it seems to be a new slang word. Anyone know where it started?",
+     "intent": "exact"
+    },
+    {
+     "platform": "facebook",
+     "user": "fb:parents.decoding.slang",
+     "title": "Heard at home: {form}",
+     "snippet": "My teen said {form} three times yesterday. Is this a thing now?",
+     "intent": "close"
+    },
+    {
+     "platform": "facebook",
+     "user": "fb:local.events.board",
+     "title": "{W} at the night market this Saturday",
+     "snippet": "Stalls, music and food. Flyer mentions {old} and a lucky draw for the first 50 visitors.",
+     "intent": "similar"
+    },
+    {
+     "platform": "youtube",
+     "user": "yt:@slangexplained",
+     "title": "{W}: the new slang word explained",
+     "snippet": "Where {w} comes from, how people use it, and whether it will last. Comments are full of examples.",
+     "intent": "exact"
+    },
+    {
+     "platform": "youtube",
+     "user": "yt:@fridayreacts",
+     "title": "Reacting to your {near} stories",
+     "snippet": "you sent in so many, part 2 next week",
+     "intent": "similar"
+    },
+    {
+     "platform": "youtube",
+     "user": "yt:@quickwordcheck",
+     "title": "Every {near} moment this month",
+     "snippet": "a compilation nobody asked for, featuring {old}",
+     "intent": "below"
+    },
+    {
+     "platform": "forums",
+     "user": "x:wordsoftheweek",
+     "title": "can we talk about {w}",
+     "snippet": "first saw it two days ago and now it is everywhere on my timeline",
+     "intent": "exact"
+    },
+    {
+     "platform": "forums",
+     "user": "x:late.night.typing",
+     "title": "{form} is my new favourite word",
+     "snippet": "using it in every sentence until someone stops me",
+     "intent": "close"
+    },
+    {
+     "platform": "forums",
+     "user": "x:corner.of.the.net",
+     "title": "Is it just me or is {near} a thing now?",
+     "snippet": "three people in my feed today alone",
+     "intent": "similar"
+    },
+    {
+     "platform": "web",
+     "user": "web:newwords.example",
+     "title": "Word watch: {w}",
+     "snippet": "A new coinage spotted in young people's posts. Our editors are tracking it; no dictionary lists it yet.",
+     "intent": "exact"
+    },
+    {
+     "platform": "web",
+     "user": "web:shopdeals.example",
+     "title": "{form} weekend sale",
+     "snippet": "Up to 40% off. Ends Sunday. {old} items included.",
+     "intent": "below"
+    }
+   ],
+   "existing": [
+    {
+     "platform": "tiktok",
+     "user": "tt:lunchbreak.lab",
+     "title": "me during the last period",
+     "snippet": "{cue} and completely {w}, do not talk to me 😶",
+     "intent": "exact"
+    },
+    {
+     "platform": "tiktok",
+     "user": "tt:hallway.diaries",
+     "title": "the vibe today",
+     "snippet": "{cue}, no explanation needed #{tag} #fyp",
+     "intent": "close"
+    },
+    {
+     "platform": "tiktok",
+     "user": "tt:afterschool.vibes",
+     "title": "Day 3 of finals",
+     "snippet": "{w}. that is the whole update.",
+     "intent": "close"
+    },
+    {
+     "platform": "instagram",
+     "user": "ig:sunset.notes",
+     "title": "Story time",
+     "snippet": "{cue}. Then {form}. Then snacks. In that order.",
+     "intent": "close"
+    },
+    {
+     "platform": "instagram",
+     "user": "ig:study.corner.daily",
+     "title": "Monday mood",
+     "snippet": "{W} again, send help ☕",
+     "intent": "close"
+    },
+    {
+     "platform": "instagram",
+     "user": "ig:minimal.moods",
+     "title": "Throwback post",
+     "snippet": "found this old one: {old} and {w}, back when life was simple",
+     "intent": "similar"
+    },
+    {
+     "platform": "facebook",
+     "user": "fb:teen.word.watch",
+     "title": "Is {w} being used in a new way?",
+     "snippet": "Seeing posts that say {cue} and {w} together. Older readers, does this match how you use it?",
+     "intent": "exact"
+    },
+    {
+     "platform": "facebook",
+     "user": "fb:local.news.desk",
+     "title": "Update: {old} reported downtown",
+     "snippet": "Residents describe the scene as {w}. More details as they come in.",
+     "intent": "similar"
+    },
+    {
+     "platform": "facebook",
+     "user": "fb:parents.decoding.slang",
+     "title": "My teen keeps saying {form}",
+     "snippet": "Every evening, about everything. Translation please?",
+     "intent": "similar"
+    },
+    {
+     "platform": "youtube",
+     "user": "yt:@slangexplained",
+     "title": "{W} has a new meaning now",
+     "snippet": "Why people write {cue} and {w} in the same post, with real examples from the comments.",
+     "intent": "exact"
+    },
+    {
+     "platform": "youtube",
+     "user": "yt:@howto.basics",
+     "title": "{W}: the classic guide",
+     "snippet": "Everything about {old}, step by step for beginners.",
+     "intent": "similar"
+    },
+    {
+     "platform": "youtube",
+     "user": "yt:@fridayreacts",
+     "title": "Your best {near} stories",
+     "snippet": "{cue}, every single one of them. Part 2 soon.",
+     "intent": "similar"
+    },
+    {
+     "platform": "forums",
+     "user": "x:wordsoftheweek",
+     "title": "is {w} the word of the year",
+     "snippet": "genuinely every second post on my timeline",
+     "intent": "close"
+    },
+    {
+     "platform": "forums",
+     "user": "x:late.night.typing",
+     "title": "a thread of {near} moments",
+     "snippet": "add yours below, keep it short",
+     "intent": "similar"
+    },
+    {
+     "platform": "forums",
+     "user": "x:citydesk.updates",
+     "title": "{form} again this week",
+     "snippet": "second time this month: {old} on the main road",
+     "intent": "below"
+    },
+    {
+     "platform": "web",
+     "user": "web:newwords.example",
+     "title": "Word watch: {w}, old word, new job",
+     "snippet": "Young people now pair it with words like {cue}. We look at how the new sense differs from the old one.",
+     "intent": "exact"
+    },
+    {
+     "platform": "web",
+     "user": "web:reference.example",
+     "title": "{W} (traditional sense)",
+     "snippet": "Definitions, history and example sentences, mostly about {old}.",
+     "intent": "similar"
+    },
+    {
+     "platform": "web",
+     "user": "web:archive.example",
+     "title": "Archive: notes on {near}",
+     "snippet": "a short entry about {old}, from an older collection",
+     "intent": "below"
+    }
+   ]
+  };
   /*TPL-END*/
   function fakeSearch(term) {
     var w = term.word, forms = term.forms.map(function (f) { return f.toLowerCase(); }), has = function (x) { return x.toLowerCase() === w.toLowerCase() || forms.indexOf(x.toLowerCase()) >= 0; };
-    var near = [w + 'ing', w + 's', w + 'ish', w + 'y'].filter(function (x) { return !has(x); })[0];
+    var near = (/ing$/i.test(w) ? [w + 's', w + 'y'] : /e$/i.test(w) ? [w.slice(0, -1) + 'ing', w + 's'] : [w + 'ing', w + 's', w + 'ish']).filter(function (x) { return !has(x); })[0] || w + 's';
     var fill = { w: w, W: w.charAt(0).toUpperCase() + w.slice(1), tag: '#' + w.replace(/[\s-]+/g, ''), form: term.forms[0] || w, near: near, cue: term.cues[0] || 'honestly', old: term.exclude[0] || '' };
     var out = [], read = {};
     (TPL[term.kind === 'existing' ? 'existing' : 'new'] || []).forEach(function (t) {
       if (!fill.old && /\{old\}/.test(t.title + t.snippet)) return;
-      var sub = function (x) { return x.replace(/\{(w|W|tag|form|near|cue|old)\}/g, function (_, k) { return fill[k]; }); };
+      var sub = function (x) { return x.replace(/#\{tag\}/g, '{tag}').replace(/\{(w|W|tag|form|near|cue|old)\}/g, function (_, k) { return fill[k]; }); };
       read[t.platform] = (read[t.platform] || 0) + 1;
       var hit = C.codeHit(term, { platform: t.platform, user: t.user, url: url(t.platform, t.user), title: sub(t.title), snippet: sub(t.snippet) }, db.settings, { keepNear: true });
       if (hit) out.push(hit);
