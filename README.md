@@ -44,7 +44,8 @@ Every search result gets a match %, read from its title and snippet, and the sum
 
 **Match % = keyword points (up to 60) + meaning points (up to 40).**
 
-- Keyword: the exact word 60; only as a hashtag or a joined-up phrase 57; one of the listed forms 54; a near match 38. A near match is an unlisted ending (`-s`, `-ing`, `-ed`, `-er`, `-y`, `-ish`, including a dropped final `e` or a doubled consonant), a one-letter misspelling of a **new** word of 5 or more letters, or the words of a phrase appearing apart.
+- Keyword: the exact word 60; only as a hashtag or a joined-up phrase 57; one of the listed forms 54; a near match 38. A near match is an unlisted ending (`-s`, `-ing`, `-ed`, and for words of 4 or more letters `-er`, `-y`, `-ish`; a dropped final `e` or a doubled consonant is allowed), a one-letter misspelling of a **new** word of 5 or more letters, or the words of a phrase appearing close together but not side by side. Words under 3 letters, and phrases made of numbers or very common words, get no near matches.
+- Clue words and older-meaning words also match with a regular ending (`boil`: boils, boiled, boiling), and a clue phrase may have punctuation inside it (`fine, but`).
 - Meaning: new meaning 40 (a new word with no older-meaning word; an existing word with a clue word and no older-meaning word); unclear 25, or 30 when words from the Meaning box appear; an older meaning takes 5 points off, so it always lands under 60%.
 - A result with nothing like the word in its title or snippet is left out.
 

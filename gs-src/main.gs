@@ -121,7 +121,7 @@ function parseResults_(provider, text) {
   return arr.map(function (r) {
     return provider === 'serper' ? { url: r.link, title: r.title, snippet: r.snippet, date: r.date || '' }
       : { url: r.url, title: r.title, snippet: r.description, date: r.page_age || r.age || '' };
-  }).filter(function (r) { return r.url; });
+  }).filter(function (r) { return /^https?:\/\//i.test(r.url || ''); });
 }
 // Runs every query for one term in parallel. Results are cached, so repeating a search within
 // the cache window costs no credits.

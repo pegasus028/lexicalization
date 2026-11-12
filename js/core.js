@@ -103,19 +103,35 @@ var LexCore = (function () {
   var KEYWORD_POINTS = { exact: 60, tag: 57, form: 54, near: 38 };
   var MEANING_POINTS = { new: 40, unclear: 25, other: -5 }; // an older meaning always lands under 60%
   var MEANING_BONUS = 5;
-  var NEAR_SUFFIXES = ['ers', 'ing', 'ish', 'es', 'ed', 'er', 's', 'd', 'y'];
   var STOP = {};
   ('about above after again also always another because been before being between both could does doing down during each ever every from have having here into just like made make many more most much must only other over really same should some someone something such than that their them then there these they thing this those through under until very want were what when where which while will with without would your yours people person when you'
   ).split(' ').forEach(function (w) { STOP[w] = 1; });
-  function parts(f) { return lower(f).split(/[\s-]+/).filter(Boolean).map(esc); }
+  var APOS = "['’]";
+  function pat(w) { return esc(w).replace(/['’]/g, APOS); }
+  function parts(f) { return lower(f).split(/[\s-]+/).filter(Boolean).map(pat); }
+  // What may not follow a match: a letter or digit, or (for a word ending in a symbol, like c++) that same symbol again.
+  function tail(f) { var c = lower(f).slice(-1); return /[a-z0-9]/.test(c) || !c ? '(?![a-z0-9])' : '(?![a-z0-9]|' + esc(c) + ')'; }
   // plain = standalone word or phrase, not a hashtag; tag = "#word" or the joined form of a phrase
-  function plainRe(f) { return new RegExp('(^|[^a-z0-9#])(' + parts(f).join('[\\s-]+') + ')(?![a-z0-9])', 'i'); }
-  function tagRe(f) { var p = parts(f); return new RegExp(p.length > 1 ? '(^|[^a-z0-9])(#?' + p.join('') + '|#' + p.join('[\\s-]*') + ')(?![a-z0-9])' : '(^|[^a-z0-9])(#' + p[0] + ')(?![a-z0-9])', 'i'); }
+  function plainRe(f) { return new RegExp('(^|[^a-z0-9#])(' + parts(f).join('[\\s-]+') + ')' + tail(f), 'i'); }
+  function tagRe(f) { var p = parts(f); return new RegExp(p.length > 1 ? '(^|[^a-z0-9])(#?' + p.join('') + '|#' + p.join('[\\s-]*') + ')' + tail(f) : '(^|[^a-z0-9])(#' + p[0] + ')' + tail(f), 'i'); }
   function editWithin1(a, b) {
     if (a === b) return false; var la = a.length, lb = b.length, i = 0, j = 0, diff = 0;
     if (Math.abs(la - lb) > 1) return false;
     while (i < la && j < lb) { if (a[i] === b[j]) { i++; j++; continue; } if (++diff > 1) return false; if (la > lb) i++; else if (lb > la) j++; else { i++; j++; } }
     return diff + (la - i) + (lb - j) <= 1;
+  }
+  // Endings that turn a word into an unlisted inflection of itself. Deliberately narrow for short
+  // words, where a longer ending usually makes a different real word (bet: better, lit: litter).
+  function inflections(w) {
+    var n = w.replace(/[^a-z0-9]/g, '').length, e = pat(w), out = [], end = ['s'];
+    if (n < 3 || !/[a-z]$/.test(w)) return out;
+    if (/(s|x|z|ch|sh)$/.test(w)) end.push('es');
+    if (/e$/.test(w)) end.push('d'); else end.push('ed', 'ing');
+    if (n >= 4) end.push('er', 'ers', 'y', 'ish');
+    out.push(e + '(?:' + end.join('|') + ')');
+    if (n >= 4 && /[a-z]e$/.test(w)) out.push(pat(w.slice(0, -1)) + '(?:ing|ed|er|ers)');            // snackrifice: snackrificing
+    if (/[^aeiou][aeiou][^aeiouwxy]$/.test(w)) out.push(e + pat(w.slice(-1)) + '(?:ing|ed)');           // yap: yapping
+    return out;
   }
   // Which level of keyword match does the text contain? exact > tag > form > near > none.
   function keywordMatch(term, text) {
@@ -125,24 +141,25 @@ var LexCore = (function () {
     if ((m = tagRe(head).exec(t))) return { level: 'tag', points: KEYWORD_POINTS.tag, form: 'verbatim', matched: m[2] };
     uniq(list(term.forms)).forEach(function (f) {
       if (lower(f) === head) return;
-      var x = plainRe(f).exec(t) || tagRe(f).exec(t) || new RegExp('(^|[^a-z0-9])(#' + parts(f).join('[\\s-]*') + ')(?![a-z0-9])', 'i').exec(t);
+      var x = plainRe(f).exec(t) || tagRe(f).exec(t) || new RegExp('(^|[^a-z0-9])(#' + parts(f).join('[\\s-]*') + ')' + tail(f), 'i').exec(t);
       if (x && (!best || f.length > best.form.length)) best = { level: 'form', points: KEYWORD_POINTS.form, form: f, matched: x[2] };
     });
     if (best) return best;
-    var p = parts(head), near = null;
-    // (a) an unlisted inflection or derivative: headword + a common suffix
-    var lastW = p[p.length - 1], stems = [lastW + '(?:' + NEAR_SUFFIXES.join('|') + ')'];
-    if (/[a-z]e$/.test(lastW)) stems.push(lastW.slice(0, -1) + '(?:ing|ed|er|ers|ish|y)');           // snackrifice: snackrificing
-    if (/[^aeiou][aeiou][^aeiouwxy]$/.test(lastW)) stems.push(lastW + lastW.slice(-1) + '(?:ing|ed|er|ers|y)'); // plotdrunk: no; yap: yapping
-    m = new RegExp('(^|[^a-z0-9])#?(' + p.slice(0, -1).concat(['(?:' + stems.join('|') + ')']).join('[\\s-]*') + ')(?![a-z0-9])', 'i').exec(t);
-    if (m) near = m[2];
+    var words = head.split(/[\s-]+/).filter(Boolean), p = words.map(pat), near = null;
+    // (a) an unlisted inflection or derivative of the headword (of its last word, for a phrase)
+    var infl = inflections(words[words.length - 1]);
+    if (infl.length) { m = new RegExp('(^|[^a-z0-9])#?(' + p.slice(0, -1).concat(['(?:' + infl.join('|') + ')']).join('[\\s-]*') + ')(?![a-z0-9])', 'i').exec(t); if (m) near = m[2]; }
     // (b) a likely misspelling: one letter added, removed or changed. Only for coined words of 5+ letters,
     //     because the one-letter neighbours of an existing word are usually other real words (cooked / booked).
-    if (!near && p.length === 1 && head.length >= 5 && term.kind !== 'existing') {
+    if (!near && words.length === 1 && /^[a-z0-9]{5,}$/.test(head) && term.kind !== 'existing') {
       (t.match(/[a-z0-9]+/g) || []).some(function (tok) { if (editWithin1(tok, head)) { near = tok; return true; } return false; });
     }
-    // (c) a phrase whose words all appear, but not side by side
-    if (!near && p.length > 1 && p.every(function (w) { return new RegExp('(^|[^a-z0-9])' + w + '(?![a-z0-9])', 'i').test(t); })) near = head.split(/[\s-]+/).join(' … ');
+    // (c) a phrase whose words all appear close together but not side by side. Not for phrases
+    //     built from very short words, numbers or common words (no cap, 6-7), which appear everywhere.
+    if (!near && words.length > 1 && words.every(function (w) { return /^[a-z]{3,}$/.test(w) && !STOP[w]; })) {
+      var toks = t.match(/[a-z0-9]+/g) || [], idx = words.map(function (w) { return toks.indexOf(w); });
+      if (idx.every(function (k) { return k >= 0; }) && Math.max.apply(null, idx) - Math.min.apply(null, idx) <= words.length + 2) near = words.join(' … ');
+    }
     if (near) return { level: 'near', points: KEYWORD_POINTS.near, form: null, matched: near };
     return { level: 'none', points: 0, form: null, matched: '' };
   }
@@ -172,13 +189,26 @@ var LexCore = (function () {
   }
   // The form a countable hit uses, or null. Near matches are never countable.
   function findForm(term, text) { var k = keywordMatch(term, text); return k.level === 'none' || k.level === 'near' ? null : k.form; }
-  // Clue and older-meaning words match as standalone words. A single word also matches with a common
-  // ending (boil: boils, boiled, boiling); a phrase also matches with punctuation between its words (fine, but).
+  // Clue and older-meaning words match as standalone words. A single word also matches with a regular
+  // ending (boil: boils, boiled, boiling; test: tests, tested), kept narrow so that a short clue cannot
+  // match a different word (car: not card; hat: not hated). A phrase also matches with punctuation
+  // between its words (fine, but).
+  function cueBody(w) {
+    var e = pat(w), n = w.length, end = [];
+    if (!/^[a-z]+$/.test(w) || n < 3) return e;
+    end.push('s');
+    if (/(s|x|z|ch|sh)$/.test(w)) end.push('es');
+    if (/e$/.test(w)) end.push('d');
+    else if (n >= 4) end.push('ed', 'ing');
+    var out = e + '(?:' + end.join('|') + ')?';
+    if (n >= 4 && /[a-z]e$/.test(w)) out = '(?:' + out + '|' + pat(w.slice(0, -1)) + 'ing)';
+    return out;
+  }
   function hasAny(words, text) {
     var t = lower(text);
     return list(words).some(function (w) {
-      var p = lower(w).split(/\s+/).filter(Boolean).map(esc); if (!p.length) return false;
-      var body = p.length > 1 ? p.join('[\\s,.;:!?\'"’-]+') : p[0] + (p[0].length >= 3 ? '(?:s|es|ed|d|ing)?' : '');
+      var p = lower(w).split(/\s+/).filter(Boolean); if (!p.length) return false;
+      var body = p.length > 1 ? p.map(pat).join('[\\s,.;:!?\'"’-]+') : cueBody(p[0]);
       return new RegExp('(^|[^a-z0-9])' + body + '(?![a-z0-9])', 'i').test(t);
     });
   }

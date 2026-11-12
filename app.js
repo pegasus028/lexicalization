@@ -200,7 +200,7 @@
     var out = h('div', { class: 'stack', id: 'search-results' });
     if (S.search) {
       var r = S.search, band = S.band || 'all', counts = { exact: 0, close: 0, similar: 0, below: 0 }, byPf = {};
-      r.hits.forEach(function (x) { if (!x.match) x.match = C.matchScore(r.term, x) || { pct: 0, band: 'below', why: 'No match in the title or snippet' }; counts[x.match.band]++;
+      r.hits.forEach(function (x) { if (!x.match) { x.match = C.matchScore(r.term, x) || { pct: 0, band: 'below', why: 'No match in the title or snippet' }; if (x.match.meaning) x.sense = x.match.meaning === 'new' ? 'target' : x.match.meaning; x.near = x.match.keyword === 'near'; } counts[x.match.band]++;
         var b = byPf[x.platform] = byPf[x.platform] || { exact: 0, close: 0, similar: 0, below: 0 }; b[x.match.band]++; });
       var shown = r.hits.filter(function (x) { return band === 'all' || x.match.band === band; }).sort(function (a, b) { return b.match.pct - a.match.pct; });
       var by = {}; shown.forEach(function (x) { (by[x.platform] = by[x.platform] || []).push(x); });
@@ -232,10 +232,11 @@
     app.replaceChildren(h('h1', { text: 'Search a word' }), form, out);
   }
   var BANDS = { exact: ['Exact', '100%'], close: ['Close match', '80 to 99%'], similar: ['Similar', '60 to 79%'], all: ['All', 'every result'], below: ['Under 60%', 'under 60%'] };
+  function safeUrl(u) { return /^https?:\/\//i.test(u || ''); }
   function hitCard(x) {
     var m = x.match || { pct: 0, band: 'below', why: '' };
     return h('div', { class: 'hit', 'data-band': m.band }, h('span', { class: 'row' }, h('span', { class: 'mpct b-' + m.band, text: m.pct + '%' }), h('span', { class: 'small muted', text: BANDS[m.band][0] + ': ' + m.why })),
-      x.url ? h('a', { href: x.url, target: '_blank', rel: 'noopener noreferrer', text: x.title || x.url }) : h('b', { text: x.title }), h('span', { class: 'small', text: x.snippet }),
+      safeUrl(x.url) ? h('a', { href: x.url, target: '_blank', rel: 'noopener noreferrer', text: x.title || x.url }) : h('b', { text: x.title }), h('span', { class: 'small', text: x.snippet }),
       h('span', { class: 'chips' }, pill(LABEL.sense[x.sense], x.sense === 'target' ? 'ok' : x.sense === 'unclear' ? 'warn' : 'muted'), pill(LABEL.ownership[x.ownership], 'muted'), pill(LABEL.marked[x.marked], 'muted'), x.near ? pill('Near match: not countable', 'warn') : x.form !== 'verbatim' ? pill('Form: ' + x.form, 'muted') : null, x.pubDate ? pill(x.pubDate, 'muted') : null, pill(C.userCode(x.user), 'muted')));
   }
   function refreshUsage(u) { if (u && S.state) S.state.usage = u; }
@@ -280,7 +281,7 @@
       var patch = function (x, k) { return function (e) { var p = {}; p[k] = e.target.value; x[k] = e.target.value; act({ action: 'codeHit', hitId: x.id, patch: p }, 'Saved').then(function (r) { if (r.ok) refresh(); }); }; };
       body.replaceChildren(h('div', { class: 'card scroll' }, h('table', { id: 'review-table' }, h('thead', {}, h('tr', {}, h('th', { text: 'First seen' }), h('th', { text: 'Where' }), h('th', { text: 'Text' }), h('th', { text: 'Meaning' }), h('th', { text: 'Who' }), h('th', { text: 'Marked' }), h('th', { text: 'Asked for' }), h('th', { text: '' }))),
         h('tbody', {}, rows.map(function (x) { return h('tr', {}, h('td', { class: 'num', text: day(x.firstSeen) + (x.baseline ? ' (baseline)' : '') }), h('td', { text: PF[x.platform] }),
-          h('td', { style: 'min-width:240px' }, x.url ? h('a', { href: x.url, target: '_blank', rel: 'noopener noreferrer', text: x.title || 'Open' }) : h('b', { text: x.title }), h('div', { class: 'small muted', text: x.snippet }), x.form !== 'verbatim' ? h('div', { class: 'small', text: 'Form: ' + x.form }) : null),
+          h('td', { style: 'min-width:240px' }, safeUrl(x.url) ? h('a', { href: x.url, target: '_blank', rel: 'noopener noreferrer', text: x.title || 'Open' }) : h('b', { text: x.title }), h('div', { class: 'small muted', text: x.snippet }), x.form !== 'verbatim' ? h('div', { class: 'small', text: 'Form: ' + x.form }) : null),
           h('td', {}, sel(LABEL.sense, x.sense, patch(x, 'sense'), 'Meaning')), h('td', {}, sel(LABEL.ownership, x.ownership, patch(x, 'ownership'), 'Who')), h('td', {}, sel(LABEL.marked, x.marked, patch(x, 'marked'), 'Marked')), h('td', {}, sel(LABEL.prompted, x.prompted, patch(x, 'prompted'), 'Asked for')),
           h('td', {}, h('button', { class: 'sm danger', type: 'button', text: 'Remove', onclick: function () { if (window.confirm('Remove this hit from the ledger?')) act({ action: 'deleteHit', hitId: x.id }, 'Removed').then(function (r) { if (r.ok) { S.hits = null; refresh().then(render); } }); } }))); })))),
         h('p', { class: 'small muted', text: 'Showing ' + rows.length + ' of ' + hits.length + ' stored hits. Account names are shown here only; the dashboard uses codes.' }));
